@@ -49,6 +49,17 @@ export function Footer() {
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-[var(--color-border)] pt-8 text-[length:var(--text-body-sm)] text-[color:var(--color-ink-muted)] md:flex-row md:items-center">
           <div className="flex flex-col gap-1">
             <p>© {year} {siteConfig.legalName}. All rights reserved.</p>
+            <p className="text-[color:var(--color-ink-subtle)]">
+              A product of{" "}
+              <a
+                href={siteConfig.parent.url}
+                className="underline decoration-[var(--color-border-strong)] underline-offset-2 hover:text-[color:var(--color-ink)]"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {siteConfig.parent.name}
+              </a>.
+            </p>
           </div>
           <p className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
             v{siteConfig.appVersion} · Built in {siteConfig.location.city}.
