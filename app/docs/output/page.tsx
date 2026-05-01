@@ -186,8 +186,8 @@ export default function OutputDocsPage() {
           step-by-step re-verification process.
         </li>
         <li>
-          <Link href="/why-defensible">Why defensible</Link> — the legal and technical
-          framework behind each of these files.
+          <Link href="/security">Security</Link> — the design decisions behind these
+          files and how they hold up under review.
         </li>
       </ul>
     </>

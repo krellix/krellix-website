@@ -7,16 +7,18 @@ import { PageHero } from "@/components/page-hero";
 import { CtaBanner } from "@/components/cta-banner";
 import { PricingCard } from "@/components/pricing-card";
 import { FeatureMatrix } from "@/components/feature-matrix";
+import { Button } from "@/components/button";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: `Transparent two-tier pricing. Personal at $${siteConfig.pricing.personalAnnual}/year, Enterprise at $${siteConfig.pricing.enterpriseAnnual.toLocaleString()}/year. No per-custodian fees, no per-gigabyte fees, no procurement cycle.`,
+  description: `Three tiers, transparent pricing. Solo at $${siteConfig.pricing.soloAnnual}/year, Firm at $${siteConfig.pricing.firmAnnual}/year, Enterprise from $${siteConfig.pricing.enterpriseAnnual.toLocaleString()}/year. No per-custodian or per-gigabyte fees.`,
   alternates: { canonical: "/pricing" },
 };
 
 export default function PricingPage() {
-  const personal = siteConfig.pricing.personalAnnual;
+  const solo = siteConfig.pricing.soloAnnual;
+  const firm = siteConfig.pricing.firmAnnual;
   const enterprise = siteConfig.pricing.enterpriseAnnual;
 
   return (
@@ -24,13 +26,12 @@ export default function PricingPage() {
       <PageHero
         eyebrow="Pricing"
         eyebrowNumber="01"
-        title={<>Two tiers. Published on the internet.</>}
+        title={<>Three tiers, transparent pricing.</>}
         lede={
           <>
-            No per-seat pricing. No per-custodian pricing. No per-gigabyte pricing. One
-            operator seat, unlimited collections for the license term. Personal pays for
-            itself on the first matter; Enterprise pays for itself by lunchtime on the
-            first custodian.
+            Pay once per year for unlimited collections — no per-matter fees, no
+            per-gigabyte fees, no per-custodian fees. Most matters cost less than one
+            billable hour.
           </>
         }
       />
@@ -38,48 +39,63 @@ export default function PricingPage() {
       {/* Price cards */}
       <Section tone="surface" divider>
         <Container width="wide">
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 md:grid-cols-3">
             <Reveal>
               <PricingCard
-                name="Personal"
-                price={`$${personal}`}
+                name="Solo"
+                price={`$${solo}`}
                 period="/year"
-                lede="For solo attorneys, HR investigators, and anyone preserving their own correspondence with a named contact."
+                lede="For solo practitioners and small matters. Collect from your own M365 mailbox or shared mailboxes you have access to."
                 bullets={[
-                  "Collect from your own Microsoft 365 mailbox or any IMAP account",
-                  "Per-email PDFs with embedded native attachments",
-                  "Thread roll-up PDFs for combined chronological review",
-                  "SHA-256 + MD5 hashes for every file",
-                  "RFC 3161 timestamp from a public TSA",
-                  "Full chain-of-custody manifest",
-                  "Unlimited collections, unlimited messages",
-                  "Priority email support, one business day",
+                  "Personal mode (your own M365 mailbox or shared mailboxes you have access to)",
+                  "By-correspondent or by-folder collection",
+                  "Bates numbering",
+                  "SHA-256 + MD5 hashes, RFC 3161 timestamps, manifest",
+                  "Items.csv load file",
+                  "Self-running verification script",
+                  "Email support, 1 business day",
                 ]}
-                ctaLabel="Start a 14-day trial"
-                ctaHref="/trial"
-                footnote="No admin consent required. Works on any Microsoft 365 tenant by default — and any IMAP account including Gmail, iCloud, Yahoo, and Fastmail."
+                ctaLabel="Request a pilot"
+                ctaHref="/contact"
+                footnote="No admin consent required. Best fit for solo practitioners and small matters."
               />
             </Reveal>
-            <Reveal delay={0.08}>
+            <Reveal delay={0.06}>
+              <PricingCard
+                name="Firm"
+                price={`$${firm}`}
+                period="/year"
+                lede="For 2–5 attorney firms running matters in parallel. Everything in Solo, plus seats for the team."
+                bullets={[
+                  "Everything in Solo",
+                  "Up to 5 operator seats",
+                  "Priority email support",
+                ]}
+                ctaLabel="Request a pilot"
+                ctaHref="/contact"
+                variant="seal"
+                badge="Most popular"
+                footnote="Best fit for 2–5 attorney firms running matters in parallel."
+              />
+            </Reveal>
+            <Reveal delay={0.12}>
               <PricingCard
                 name="Enterprise"
                 price={`$${enterprise.toLocaleString()}`}
                 period="/year"
+                priceLabel="Starting at — pricing scales with seat count and custodian volume."
                 lede="For in-house counsel, compliance, and IT running custodian holds across an organization."
                 bullets={[
-                  "Everything in Personal, plus —",
-                  "Collect from another user's mailbox via delegated access",
-                  "Collect from custodian OneDrive",
-                  "Collect from custodian SharePoint sites",
-                  "Multi-custodian collection records and manifests",
-                  "Deduplication across custodians with hash-based matching",
-                  "Onboarding call with the founder for admin-consent setup",
-                  "Priority email support, same business day",
+                  "Everything in Firm",
+                  "Custodian collection (other users' mailboxes)",
+                  "OneDrive + SharePoint document collection",
+                  "Tenant-wide admin consent",
+                  "Onboarding call",
+                  "Custom seat counts",
                 ]}
-                ctaLabel="Start a 14-day trial"
-                ctaHref="/trial"
-                variant="seal"
-                footnote="Requires tenant admin consent once and Add-MailboxPermission Full Access on each custodian mailbox. Setup guide linked from the trial email."
+                ctaLabel="Talk to sales"
+                ctaHref={`mailto:${siteConfig.contact.salesEmail}`}
+                footnote="Pricing scales with seat count and custodian volume. Custom contracts available."
               />
             </Reveal>
           </div>
@@ -101,10 +117,9 @@ export default function PricingPage() {
               </Reveal>
               <Reveal delay={0.12}>
                 <p className="mt-5 max-w-[52ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
-                  The difference between the two plans is entirely about <em>who</em> the
-                  custodian is — not about the defensibility of the output or the quality
-                  of the manifest. Both tiers produce the same hashes, the same
-                  timestamp, and the same verifiable artifacts.
+                  The Personal column covers Solo and Firm. The Enterprise column adds
+                  custodian mailbox, OneDrive, and SharePoint collection on top of
+                  everything in Personal.
                 </p>
               </Reveal>
             </div>
@@ -151,6 +166,33 @@ export default function PricingPage() {
         </Container>
       </Section>
 
+      {/* Pilot program banner */}
+      <Section>
+        <Container width="wide">
+          <Reveal>
+            <div className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] p-8 md:p-12">
+              <div className="grid gap-8 md:grid-cols-12 md:items-center">
+                <div className="md:col-span-8">
+                  <p className="eyebrow">Pilot program</p>
+                  <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.15] tracking-[-0.015em] text-balance">
+                    We&apos;re working closely with our first customers.
+                  </h2>
+                  <p className="mt-4 max-w-[56ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                    If you have a use case that fits, request a pilot — we&apos;ll set
+                    you up directly.
+                  </p>
+                </div>
+                <div className="md:col-span-4 md:justify-self-end">
+                  <Button href="/contact" variant="primary" size="lg" arrow>
+                    Request a pilot
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </Container>
+      </Section>
+
       <CtaBanner />
     </>
   );
@@ -159,34 +201,30 @@ export default function PricingPage() {
 const faqs = [
   {
     q: "What does the annual license cover?",
-    a: "One operator seat running Krellix on a Windows 10 or Windows 11 machine. Unlimited collections, unlimited messages, unlimited custodians for the license term. When the term expires, your existing exports and manifests remain verifiable forever — the license renewal is for future collections.",
+    a: "Operator seats running Krellix on Windows 10 or Windows 11 machines (one seat for Solo, up to five for Firm, custom for Enterprise). Unlimited collections, unlimited messages, unlimited custodians for the license term. When the term expires, your existing exports and manifests remain verifiable forever — the license renewal is for future collections.",
   },
   {
     q: "Do I need to buy per-custodian or per-gigabyte?",
     a: "No. Enterprise customers preserving a mailbox-a-week pay the same as customers running a dozen holds a quarter. If the economics make you hesitate on whether a collection is worth doing, something about the pricing model is wrong — and that's why we don't meter.",
   },
   {
-    q: "Can a firm buy seats for multiple operators?",
-    a: "Yes. Additional operator seats are $299/year each on Personal and $1,499/year each on Enterprise. The second and third seats cost less because the infrastructure — the TSA relationships, the cert pinning, the chain of custody tooling — is already built.",
-  },
-  {
-    q: "Is there a month-to-month option?",
-    a: "Not as a public tier. If you're running a single defined matter and want the license to end when the matter does, email sales and we'll scope a term-of-matter license. Most customers realize after one use that they want the permanent tool.",
-  },
-  {
-    q: "Can we expense it? Can IT expense it?",
-    a: "Both. The license is invoiced under your firm's name by default. Personal tier is typically expensed by the individual attorney; Enterprise is typically expensed by the IT or compliance budget. We can also split invoicing if your procurement process requires it.",
-  },
-  {
-    q: "Do you offer a nonprofit or academic discount?",
-    a: "Legal aid organizations, clinics attached to law schools, and 501(c)(3) investigative journalism outfits get Personal at $199/year. Email sales with your EIN and we'll issue a quote the same day.",
-  },
-  {
     q: "What happens to my exports if I don't renew?",
     a: "Your exports are yours. They are plain .eml files, plain PDFs, plain JSON, and plain TSA tokens. Nothing about them requires Krellix to verify — a lapsed license doesn't make a past collection inadmissible. The renewal is for the ability to make new collections, not to read old ones.",
   },
   {
+    q: "Can we expense it? Can IT expense it?",
+    a: "Both. The license is invoiced under your firm's name by default. Solo is typically expensed by the individual attorney; Firm and Enterprise are typically expensed by the firm or IT/compliance budget. We can also split invoicing if your procurement process requires it.",
+  },
+  {
+    q: "Is there a month-to-month option?",
+    a: "Not as a public tier. If you're running a single defined matter and want the license to end when the matter does, email sales and we'll scope a term-of-matter license.",
+  },
+  {
+    q: "Do you offer a nonprofit or academic discount?",
+    a: "Legal aid organizations, clinics attached to law schools, and 501(c)(3) investigative journalism outfits get a discount on Solo. Email sales with your EIN and we'll send a quote.",
+  },
+  {
     q: "Do you have SOC 2?",
-    a: "Not yet — the product is desktop software that runs on the operator's machine and sends no collected data to Krellix servers, so SOC 2's applicability is limited. We have a SOC 2 Type I engagement scheduled for Q3 2026 covering the website, license issuance, and support infrastructure.",
+    a: "Not yet. Krellix is desktop software that runs on the operator's machine and sends no collected data to Krellix servers, so SOC 2's applicability is limited. SOC 2 readiness is on our roadmap — see the roadmap page for current status.",
   },
 ];

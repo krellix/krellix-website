@@ -31,16 +31,17 @@ export default function HomePage() {
               </Reveal>
               <Reveal delay={0.12}>
                 <p className="mt-7 max-w-[54ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
-                  Krellix collects from Microsoft 365 or any IMAP mailbox, hashes every
-                  file, and RFC 3161 timestamps the whole collection. Built for lawyers,
-                  compliance officers, and HR investigators who need a chain of custody that
-                  survives a motion to compel — without a Purview seat or a vendor invoice.
+                  Krellix collects email from Microsoft 365 with full chain of custody —
+                  SHA-256 hashes, RFC 3161 timestamps from DigiCert, and a self-verifying
+                  manifest. Built for solo attorneys, in-house counsel, and HR
+                  investigators who need defensible collection without a Purview seat or a
+                  vendor invoice.
                 </p>
               </Reveal>
               <Reveal delay={0.18}>
                 <div className="mt-10 flex flex-wrap items-center gap-4">
-                  <Button href="/trial" variant="primary" size="lg" arrow>
-                    Start the 14-day trial
+                  <Button href="/contact" variant="primary" size="lg" arrow>
+                    Request a pilot
                   </Button>
                   <Button href="/how-it-works" variant="secondary" size="lg">
                     See how it works
@@ -51,7 +52,7 @@ export default function HomePage() {
                 <div className="mt-10 flex flex-wrap items-center gap-3">
                   <SealBadge>SHA-256 + MD5</SealBadge>
                   <SealBadge>RFC 3161 timestamped</SealBadge>
-                  <SealBadge>Federal Rules 901 / 902(14) ready</SealBadge>
+                  <SealBadge>Verifiable on any machine</SealBadge>
                 </div>
               </Reveal>
             </div>
@@ -88,13 +89,57 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* The problem */}
+      {/* Where Krellix is today */}
       <Section>
+        <Container width="wide">
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-4">
+              <Reveal>
+                <Eyebrow number="02">Where Krellix is today</Eyebrow>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
+                  Honest about the stage we&apos;re at.
+                </h2>
+              </Reveal>
+            </div>
+            <div className="md:col-span-8">
+              <RevealStagger>
+                {stage.map((item, i) => (
+                  <RevealItem key={item.title}>
+                    <div className="grid gap-4 border-t border-[var(--color-border)] py-8 md:grid-cols-12 md:gap-10">
+                      <div className="md:col-span-1">
+                        <span className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <div className="md:col-span-4">
+                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.2] tracking-[-0.008em]">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <div className="md:col-span-7">
+                        <p className="text-[length:var(--text-body)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                          {item.body}
+                        </p>
+                      </div>
+                    </div>
+                  </RevealItem>
+                ))}
+                <div className="border-t border-[var(--color-border)]" />
+              </RevealStagger>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* The problem */}
+      <Section tone="surface" divider>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <Reveal>
-                <Eyebrow number="02">The gap Krellix fills</Eyebrow>
+                <Eyebrow number="03">The gap Krellix fills</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -113,9 +158,9 @@ export default function HomePage() {
                     five-figure invoice.
                   </p>
                   <p>
-                    Krellix is the fourth option. One-time license, runs on the operator&apos;s
-                    machine, produces the same artifacts a vendor would: native .eml files,
-                    searchable PDFs, a signed manifest, and a public TSA timestamp.
+                    Krellix is the fourth option. Annual license, runs on the operator&apos;s
+                    machine, produces native .eml files, searchable PDFs, a signed
+                    manifest, and a public TSA timestamp.
                   </p>
                   <p className="text-[color:var(--color-ink)]">
                     Personal mode for your own correspondence. Enterprise mode for another
@@ -130,12 +175,12 @@ export default function HomePage() {
       </Section>
 
       {/* How it works */}
-      <Section tone="surface" divider>
+      <Section divider>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-4">
               <Reveal>
-                <Eyebrow number="03">How it works</Eyebrow>
+                <Eyebrow number="04">How it works</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -191,12 +236,12 @@ export default function HomePage() {
       </Section>
 
       {/* Sample output */}
-      <Section>
+      <Section tone="surface" divider>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12 md:items-start">
             <div className="md:col-span-5">
               <Reveal>
-                <Eyebrow number="04">What you ship</Eyebrow>
+                <Eyebrow number="05">What you ship</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
@@ -213,8 +258,8 @@ export default function HomePage() {
               </Reveal>
               <Reveal delay={0.16}>
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <Button href="/why-defensible" variant="primary" arrow>
-                    Why this holds up in court
+                  <Button href="/how-it-works" variant="primary" arrow>
+                    See how it works
                   </Button>
                   <Button href="/docs/chain-of-custody" variant="ghost">
                     How to verify one yourself
@@ -232,12 +277,12 @@ export default function HomePage() {
       </Section>
 
       {/* Audiences */}
-      <Section tone="surface" divider>
+      <Section>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-4">
               <Reveal>
-                <Eyebrow number="05">Who uses Krellix</Eyebrow>
+                <Eyebrow number="06">Who Krellix is for</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -271,24 +316,24 @@ export default function HomePage() {
       </Section>
 
       {/* Pricing preview */}
-      <Section>
+      <Section tone="surface" divider>
         <Container width="wide">
           <div className="grid gap-10 md:grid-cols-12 md:items-end">
             <div className="md:col-span-7">
               <Reveal>
-                <Eyebrow number="06">Pricing</Eyebrow>
+                <Eyebrow number="07">Pricing</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
-                  ${siteConfig.pricing.personalAnnual} or ${siteConfig.pricing.enterpriseAnnual.toLocaleString()} a year. Published on the pricing page.
+                  Three tiers. Published on the pricing page.
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-6 max-w-[56ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
-                  No per-seat pricing, no per-custodian pricing, no per-gigabyte pricing.
-                  One operator seat, unlimited collections for the license term. Personal
-                  pays for itself on the first matter. Enterprise pays for itself by
-                  lunchtime on the first custodian.
+                  No per-seat pricing, no per-custodian pricing, no per-gigabyte
+                  pricing. One annual license, unlimited collections. Solo for the
+                  individual practitioner; Firm for 2&ndash;5 attorneys; Enterprise
+                  for IT-equipped teams running custodian holds.
                 </p>
               </Reveal>
               <Reveal delay={0.16}>
@@ -296,19 +341,28 @@ export default function HomePage() {
                   <Button href="/pricing" variant="primary" arrow>
                     See what&apos;s included
                   </Button>
-                  <Button href="/trial" variant="secondary">
-                    Try it for 14 days first
+                  <Button href="/contact" variant="secondary">
+                    Request a pilot
                   </Button>
                 </div>
               </Reveal>
             </div>
             <div className="md:col-span-5">
               <Reveal delay={0.18}>
-                <dl className="grid grid-cols-2 gap-6 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-8">
+                <dl className="grid grid-cols-3 gap-4 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-6 md:p-7">
                   <div>
-                    <dt className="eyebrow">Personal</dt>
-                    <dd className="mt-2 font-display text-[2rem] leading-none tracking-[-0.015em]">
-                      ${siteConfig.pricing.personalAnnual}
+                    <dt className="eyebrow">Solo</dt>
+                    <dd className="mt-2 font-display text-[1.625rem] leading-none tracking-[-0.015em]">
+                      ${siteConfig.pricing.soloAnnual}
+                    </dd>
+                    <dd className="mt-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
+                      / year
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="eyebrow">Firm</dt>
+                    <dd className="mt-2 font-display text-[1.625rem] leading-none tracking-[-0.015em]">
+                      ${siteConfig.pricing.firmAnnual}
                     </dd>
                     <dd className="mt-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
                       / year
@@ -316,17 +370,11 @@ export default function HomePage() {
                   </div>
                   <div>
                     <dt className="eyebrow">Enterprise</dt>
-                    <dd className="mt-2 font-display text-[2rem] leading-none tracking-[-0.015em]">
-                      ${siteConfig.pricing.enterpriseAnnual.toLocaleString()}
+                    <dd className="mt-2 font-display text-[1.625rem] leading-none tracking-[-0.015em]">
+                      from ${siteConfig.pricing.enterpriseAnnual.toLocaleString()}
                     </dd>
                     <dd className="mt-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
                       / year
-                    </dd>
-                  </div>
-                  <div className="col-span-2 border-t border-[var(--color-border)] pt-5">
-                    <dt className="eyebrow">Trial</dt>
-                    <dd className="mt-2 font-mono text-[length:var(--text-body-sm)] text-[color:var(--color-ink)]">
-                      {siteConfig.pricing.trialDays} days, full feature set, no credit card.
                     </dd>
                   </div>
                 </dl>
@@ -342,11 +390,34 @@ export default function HomePage() {
   );
 }
 
+const stage = [
+  {
+    title: "Krellix Mail v3.1 is shipping today.",
+    body:
+      "The product is real and in operators' hands. It collects email from Microsoft 365 with a full chain of custody — hashes, RFC 3161 timestamps, and a verifiable manifest.",
+  },
+  {
+    title: "We're in early pilot.",
+    body:
+      "We're working with a small number of customers in Kentucky and beyond, expanding deliberately rather than chasing scale. Every customer talks to the founder directly.",
+  },
+  {
+    title: "What we ship next is shaped by what our customers ask for.",
+    body: (
+      <>
+        We publish a <Link href="/roadmap" className="text-[color:var(--color-ink)] underline decoration-1 underline-offset-4 hover:text-[color:var(--color-accent)]">public roadmap</Link>{" "}
+        so prospects can see where Krellix is heading before they commit. Customer
+        feedback decides what comes next.
+      </>
+    ),
+  },
+] as const;
+
 const steps = [
   {
     title: "Sign in and scope",
     body:
-      "Authenticate with your own Microsoft 365 credentials or IMAP login. Pick a custodian — yourself in Personal mode, another user in Enterprise mode — and a date range, subject filter, or sender list.",
+      "Authenticate with your own Microsoft 365 credentials or IMAP login. Pick a custodian — yourself in Personal mode, another user in Enterprise mode — and a date range, correspondent, or folder.",
   },
   {
     title: "Collect and preserve",
@@ -361,6 +432,6 @@ const steps = [
   {
     title: "Deliver and verify",
     body:
-      "The export lands on your disk as seven numbered folders. Any reviewer can re-hash the files and re-verify the TSA signature with OpenSSL. The verify steps ship inside the export as a VERIFY.md file.",
+      "The export lands on your disk as numbered folders. Any reviewer can re-hash the files and re-verify the TSA signature with the bundled VerifyTimestamp.bat — no Krellix license required.",
   },
 ];

@@ -6,11 +6,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "/",
     "/how-it-works",
-    "/why-defensible",
     "/pricing",
+    "/roadmap",
     "/security",
     "/about",
-    "/trial",
+    "/contact",
     "/docs",
     "/docs/getting-started",
     "/docs/personal-setup",

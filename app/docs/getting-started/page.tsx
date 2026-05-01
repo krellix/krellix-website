@@ -14,9 +14,9 @@ export default function GettingStartedPage() {
       <p className="eyebrow">Documentation · Getting started</p>
       <h1>From download to first export in fifteen minutes.</h1>
       <p>
-        This is the short path. If you followed the trial link in your email, you already
+        This is the short path. If you followed the pilot link in your email, you already
         have the installer and a license file. If not, start at{" "}
-        <Link href="/trial">/trial</Link> and come back here once the installer has
+        <Link href="/contact">/contact</Link> and come back here once the installer has
         arrived.
       </p>
 
@@ -24,8 +24,8 @@ export default function GettingStartedPage() {
       <ol>
         <li>
           Double-click <code>Krellix-Setup-3.1.0.exe</code>. Windows SmartScreen may show a
-          publisher confirmation — the installer is signed by &ldquo;Cole Christopher Solutions
-          LLC&rdquo; with a DigiCert EV certificate.
+          publisher confirmation — once our EV code-signing certificate is issued, the
+          installer is signed by &ldquo;Krellix LLC.&rdquo;
         </li>
         <li>
           Install for the current user (the default). Installing machine-wide works too,
@@ -130,8 +130,8 @@ export default function GettingStartedPage() {
           wrong mid-collection.
         </li>
         <li>
-          <Link href="/why-defensible">Why defensible</Link> — the technical and legal
-          framework behind the output.
+          <Link href="/docs/chain-of-custody">Chain of custody</Link> — how to verify a
+          Krellix export end-to-end.
         </li>
       </ul>
     </>

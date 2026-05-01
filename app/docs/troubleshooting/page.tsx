@@ -56,9 +56,9 @@ export default function TroubleshootingPage() {
       <p>
         <strong>Fix:</strong> verify the file&apos;s signature. Right-click the installer,
         choose <em>Properties</em> → <em>Digital Signatures</em>, and confirm the signer
-        is &ldquo;Cole Christopher Solutions LLC&rdquo; with a valid DigiCert chain. If the
-        signature is missing or invalid, re-download from the link in your trial email —
-        don&apos;t install.
+        is &ldquo;Krellix LLC&rdquo; with a valid DigiCert chain. If the signature is
+        missing or invalid, re-download from the link in your pilot email — don&apos;t
+        install.
       </p>
 
       <h2 id="pre-flight">Pre-flight errors</h2>

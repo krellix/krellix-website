@@ -26,6 +26,15 @@ const config: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/help",
+        destination: "/docs",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withMDX(config);

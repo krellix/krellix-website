@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/container";
 import { Section } from "@/components/section";
 import { Eyebrow } from "@/components/eyebrow";
@@ -22,14 +23,121 @@ export default function SecurityPage() {
         eyebrow="Security"
         eyebrowNumber="01"
         title={<>Straight answers to the security review.</>}
-        lede="Krellix is desktop software that runs on the operator's Windows machine. Collected data never touches a Krellix server, and the product does not phone home. This page documents the design decisions that make that true, and what you can verify for yourself."
+        lede="Krellix is desktop software that runs on the operator's Windows machine. Collected data never touches a Krellix server, and the product does not phone home. This page documents the design decisions that make that true today, and the certifications we're working toward."
       >
         <div className="flex flex-wrap gap-3">
           <SealBadge>Data stays on your machine</SealBadge>
           <SealBadge>Delegated OAuth, no Application scopes</SealBadge>
-          <SealBadge>Signed Windows installer</SealBadge>
+          <SealBadge>No telemetry</SealBadge>
         </div>
       </PageHero>
+
+      {/* Current security posture */}
+      <Section>
+        <Container width="wide">
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <Reveal>
+                <Eyebrow number="02">Current security posture</Eyebrow>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.018em] text-balance">
+                  What&apos;s in place today.
+                </h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="mt-6 max-w-[48ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                  Krellix is in early pilot. The list below is what is shipping in v{siteConfig.appVersion} — not aspirational, not roadmap, just the current state of the build.
+                </p>
+              </Reveal>
+            </div>
+            <div className="md:col-span-7">
+              <Reveal delay={0.1}>
+                <ul className="space-y-3.5">
+                  {currentPosture.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-3 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-[length:var(--text-body)] leading-[1.55] text-[color:var(--color-ink)]"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="mt-[0.3rem] flex-shrink-0">
+                        <path
+                          d="M3 8.5l3.5 3.5L13 4.5"
+                          stroke="var(--color-accent)"
+                          strokeWidth="1.6"
+                          strokeLinecap="square"
+                        />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* What's coming */}
+      <Section tone="surface" divider>
+        <Container width="wide">
+          <div className="grid gap-12 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <Reveal>
+                <Eyebrow number="03">What&rsquo;s coming</Eyebrow>
+              </Reveal>
+              <Reveal delay={0.05}>
+                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.018em] text-balance">
+                  Certifications we&apos;re working toward.
+                </h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="mt-6 max-w-[48ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                  Status here mirrors the public{" "}
+                  <Link
+                    href="/roadmap"
+                    className="text-[color:var(--color-ink)] underline decoration-1 underline-offset-4 hover:text-[color:var(--color-accent)]"
+                  >
+                    roadmap
+                  </Link>
+                  . If you need formal compliance documentation today, request our
+                  current security and privacy posture document at{" "}
+                  <a
+                    href="mailto:security@krellix.app"
+                    className="text-[color:var(--color-ink)] underline decoration-1 underline-offset-4 hover:text-[color:var(--color-accent)]"
+                  >
+                    security@krellix.app
+                  </a>
+                  .
+                </p>
+              </Reveal>
+            </div>
+            <div className="md:col-span-7">
+              <Reveal delay={0.1}>
+                <ul className="space-y-4">
+                  {comingSoon.map((item) => (
+                    <li
+                      key={item.title}
+                      className="rounded-sm border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
+                    >
+                      <div className="flex items-baseline justify-between gap-4">
+                        <p className="font-display text-[1.0625rem] leading-[1.25] tracking-[-0.005em] text-[color:var(--color-ink)]">
+                          {item.title}
+                        </p>
+                        <span className="font-mono text-[length:var(--text-mono)] uppercase tracking-[0.08em] text-[color:var(--color-ink-muted)]">
+                          {item.status}
+                        </span>
+                      </div>
+                      <p className="mt-2 text-[length:var(--text-body-sm)] leading-[1.55] text-[color:var(--color-ink-muted)]">
+                        {item.body}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+            </div>
+          </div>
+        </Container>
+      </Section>
 
       {/* Data flow */}
       <Section tone="surface" divider>
@@ -37,7 +145,7 @@ export default function SecurityPage() {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <Reveal>
-                <Eyebrow number="02">Data flow</Eyebrow>
+                <Eyebrow number="04">Data flow</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -89,7 +197,7 @@ export default function SecurityPage() {
       <Section>
         <Container width="wide">
           <Reveal>
-            <Eyebrow number="03">Controls</Eyebrow>
+            <Eyebrow number="05">Controls</Eyebrow>
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="mt-5 max-w-[28ch] font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -121,7 +229,7 @@ export default function SecurityPage() {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <Reveal>
-                <Eyebrow number="04">Microsoft Graph permissions</Eyebrow>
+                <Eyebrow number="06">Microsoft Graph permissions</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -170,7 +278,7 @@ export default function SecurityPage() {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <Reveal>
-                <Eyebrow number="05">Vulnerability disclosure</Eyebrow>
+                <Eyebrow number="07">Vulnerability disclosure</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
                 <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.018em] text-balance">
@@ -201,11 +309,6 @@ export default function SecurityPage() {
                     Krellix is early — but we&apos;ll send a bottle of something nice and a
                     hand-written thank-you note for anything meaningful.
                   </p>
-                  <p>
-                    A standard{" "}
-                    <code className="font-mono text-[length:var(--text-body-sm)]">/.well-known/security.txt</code>{" "}
-                    file is published at the site root with the same contact information.
-                  </p>
                 </div>
               </Reveal>
             </div>
@@ -214,16 +317,56 @@ export default function SecurityPage() {
       </Section>
 
       <CtaBanner
-        title="Want a deeper security conversation before a trial?"
-        lede="Email sales and we'll set up a 30-minute call to walk through the data flow, the signing infrastructure, and any questions your infosec team wants answered in writing."
+        title="Want a deeper security conversation before a pilot?"
+        lede="Email and we'll set up a 30-minute call to walk through the data flow, the signing infrastructure, and any questions your infosec team wants answered in writing."
         primaryLabel="Email sales"
         primaryHref={`mailto:${siteConfig.contact.salesEmail}`}
-        secondaryLabel="Start the trial anyway"
-        secondaryHref="/trial"
+        secondaryLabel="Request a pilot"
+        secondaryHref="/contact"
       />
     </>
   );
 }
+
+const currentPosture = [
+  "Local-only processing — collected email and documents never leave the operator's machine",
+  "No telemetry — the app does not phone home and collects no usage analytics",
+  "No cloud upload — Krellix has no server-side storage of customer content",
+  "Encrypted local cache for in-flight collection state",
+  "OAuth tokens stored in Windows DPAPI via the MSAL secure cache",
+  "Crash logs written only to %APPDATA% on the operator's machine",
+  "Delegated OAuth scopes only — never Application permissions",
+  "Outbound traffic limited to Microsoft Graph and a public RFC 3161 timestamp authority",
+  "Self-running verification script bundled with every export (VerifyTimestamp.bat)",
+];
+
+const comingSoon = [
+  {
+    title: "EV code-signing certificate",
+    status: "In progress",
+    body: "Certificate ordered. Pilot installers signed once issued.",
+  },
+  {
+    title: "Microsoft Publisher Verification",
+    status: "In progress",
+    body: "Submitted. When approved, sign-in shows Microsoft's verified-publisher badge on the consent dialog.",
+  },
+  {
+    title: "SOC 2 readiness program",
+    status: "Planned",
+    body: "Documentation and process work scheduled, not yet underway.",
+  },
+  {
+    title: "Microsoft 365 App Compliance Program",
+    status: "Planned",
+    body: "Working toward Publisher Attestation and ultimately full M365 Certification.",
+  },
+  {
+    title: "SOC 2 Type II audit",
+    status: "Not in v3.x",
+    body: "Not on the v3.x roadmap. We're being upfront rather than implying it's imminent.",
+  },
+];
 
 const dataFlow = [
   { type: "Collected messages and attachments", location: "Operator's local disk, under the export folder they chose" },
@@ -245,9 +388,9 @@ const controls = [
   },
   {
     label: "Code signing",
-    title: "Every release is signed",
+    title: "EV code-signing in progress",
     body:
-      "The Windows installer and the compiled application are signed with an EV code-signing certificate issued by DigiCert. Windows SmartScreen, Microsoft Defender, and most endpoint security products recognize the signature and don't flag the installer as unknown-publisher.",
+      "An EV code-signing certificate has been ordered and is being issued; pilot installers go out signed once it's in place. We're tracking the same goal toward Microsoft Publisher Verification so the M365 consent dialog shows the verified-publisher badge. Status of both is on the roadmap.",
   },
   {
     label: "Network egress",

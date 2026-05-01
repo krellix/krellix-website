@@ -68,8 +68,8 @@ export function Nav() {
         </nav>
 
         <div className="hidden md:block">
-          <Button href="/trial" variant="primary" size="sm" arrow>
-            Start a trial
+          <Button href="/contact" variant="primary" size="sm" arrow>
+            Request a pilot
           </Button>
         </div>
 
@@ -111,8 +111,8 @@ export function Nav() {
                 ))}
               </ul>
               <div className="mt-8">
-                <Button href="/trial" variant="primary" size="md" arrow>
-                  Start a trial
+                <Button href="/contact" variant="primary" size="md" arrow>
+                  Request a pilot
                 </Button>
               </div>
             </Container>

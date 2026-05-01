@@ -2,12 +2,10 @@ import { cn } from "@/lib/utils";
 
 /**
  * Visual mock of a chain-of-custody manifest excerpt. Used on the
- * homepage and on /why-defensible as a concrete demonstration of the
- * output — the single most credibility-defining artifact Krellix
- * produces. Not the real file; the real file is a multi-kilobyte
- * JSON document delivered inside the export. This is the excerpt
- * that convinces a lawyer the product is actually doing what it
- * claims.
+ * homepage as a concrete demonstration of the output — the single
+ * most credibility-defining artifact Krellix produces. Not the real
+ * file; the real file is a multi-kilobyte JSON document delivered
+ * inside the export.
  *
  * Every value here is deliberately plausible: hashes are correct
  * length, TSA is a real public authority, KQL is the real query

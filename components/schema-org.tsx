@@ -71,10 +71,9 @@ export function WebsiteSchema() {
 }
 
 /**
- * Product schema for Krellix Mail. Two offers (Personal + Enterprise)
- * matching the pricing page. AggregateOffer lets Google show a price
- * range in rich results rather than a single number, which is more
- * honest given the two-tier model.
+ * Product schema for Krellix Mail. Three tiers (Solo, Firm, Enterprise).
+ * AggregateOffer lets Google show a price range in rich results — Enterprise
+ * is "starting at," so highPrice is the published floor, not a ceiling.
  */
 export function SoftwareSchema() {
   const data = {
@@ -92,9 +91,9 @@ export function SoftwareSchema() {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "USD",
-      lowPrice: String(siteConfig.pricing.personalAnnual),
+      lowPrice: String(siteConfig.pricing.soloAnnual),
       highPrice: String(siteConfig.pricing.enterpriseAnnual),
-      offerCount: 2,
+      offerCount: 3,
       availability: "https://schema.org/InStock",
     },
     featureList: [
@@ -104,7 +103,8 @@ export function SoftwareSchema() {
       "Microsoft 365 and IMAP mailbox collection",
       "OneDrive and SharePoint collection (Enterprise)",
       "Per-email PDF with embedded native attachments",
-      "Bates numbering for eDiscovery review",
+      "Bates numbering across email and document phases",
+      "Items.csv load file (machine-readable index)",
     ],
   };
   return (

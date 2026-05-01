@@ -174,7 +174,7 @@ export default function VerifyPage() {
           <Link href="/docs/output">Understanding the export structure</Link>
         </li>
         <li>
-          <Link href="/why-defensible">The legal framework behind this</Link>
+          <Link href="/security">Security — design decisions behind the chain of custody</Link>
         </li>
         <li>
           <Link href="/docs/troubleshooting">Troubleshooting — verification failures</Link>

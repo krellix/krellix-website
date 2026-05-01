@@ -17,9 +17,9 @@ const variants: Record<Variant, string> = {
     "bg-transparent text-[color:var(--color-ink)] hover:bg-[var(--color-surface)]",
   ink:
     "bg-[var(--color-bg)] text-[color:var(--color-ink)] hover:bg-[var(--color-surface)]",
-  /* seal — primary CTAs on /trial and sample-download moments only.
-     Earns the gold because those actions are about cryptographic
-     artifacts (the sample manifest, the timestamped export). */
+  /* seal — for the rare CTA tied to a cryptographic artifact (sample
+     manifest, timestamped export). Reserved on purpose; the gold is
+     load-bearing visual signal, not decoration. */
   seal:
     "bg-[var(--color-seal)] text-[#FAFAF7] hover:bg-[#8F6724]",
 };

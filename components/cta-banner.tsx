@@ -3,12 +3,12 @@ import { Button } from "./button";
 import { Reveal } from "./reveal";
 
 export function CtaBanner({
-  title = "Ready to collect your first defensible export?",
-  lede = "Download the 14-day trial. No credit card, no sales call — just the real build on your machine. If it doesn't hold up under a motion to compel, don't pay.",
-  primaryLabel = "Start the 14-day trial",
-  primaryHref = "/trial",
-  secondaryLabel = "See a sample export",
-  secondaryHref = "/why-defensible#sample",
+  title = "Ready to talk about a pilot?",
+  lede = "Krellix is in early pilot with a small number of customers. If your matter looks like a fit, send a note — Cole reads every email and replies within one business day.",
+  primaryLabel = "Request a pilot",
+  primaryHref = "/contact",
+  secondaryLabel = "See the roadmap",
+  secondaryHref = "/roadmap",
 }: {
   title?: string;
   lede?: string;

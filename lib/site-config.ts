@@ -10,7 +10,7 @@ export const siteConfig = {
   legalName: "Krellix LLC",
   tagline: "Defensible email and document collection for legal and compliance teams.",
   description:
-    "Krellix collects email and documents from Microsoft 365 or IMAP, hashes every file, and RFC 3161 timestamps the collection. Built for lawyers, compliance officers, and HR investigators who need a chain of custody a court will accept.",
+    "Krellix collects email and documents from Microsoft 365 or IMAP, hashes every file, and RFC 3161 timestamps the collection. Built for solo attorneys, in-house counsel, and HR investigators who need a defensible chain of custody without a Purview seat or a vendor invoice.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://krellix.app",
   ogImage: "/og-default.png",
   founder: "Cole Flanders",
@@ -25,9 +25,10 @@ export const siteConfig = {
     bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || null,
   },
   pricing: {
-    personalAnnual: 499,
-    enterpriseAnnual: 1999,
-    trialDays: 14,
+    soloAnnual: 299,
+    firmAnnual: 799,
+    enterpriseAnnual: 2499,
+    startingFromEnterprise: true,
   },
   parent: {
     name: "Cole Christopher Solutions LLC",
@@ -42,8 +43,8 @@ export type NavLink = { label: string; href: string };
 
 export const primaryNav: NavLink[] = [
   { label: "How it works", href: "/how-it-works" },
-  { label: "Why defensible", href: "/why-defensible" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Roadmap", href: "/roadmap" },
   { label: "Security", href: "/security" },
   { label: "Docs", href: "/docs" },
 ];
@@ -53,10 +54,10 @@ export const footerNav: { heading: string; links: NavLink[] }[] = [
     heading: "Product",
     links: [
       { label: "How it works", href: "/how-it-works" },
-      { label: "Why defensible", href: "/why-defensible" },
       { label: "Pricing", href: "/pricing" },
+      { label: "Roadmap", href: "/roadmap" },
       { label: "Security", href: "/security" },
-      { label: "Start a trial", href: "/trial" },
+      { label: "Request a pilot", href: "/contact" },
     ],
   },
   {
@@ -83,7 +84,6 @@ export const footerNav: { heading: string; links: NavLink[] }[] = [
     links: [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
-      { label: "Security.txt", href: "/.well-known/security.txt" },
     ],
   },
 ];
@@ -95,6 +95,9 @@ export const featureMatrix = [
     rows: [
       { label: "Microsoft 365 (your own mailbox)", personal: true, enterprise: true },
       { label: "IMAP — Gmail, iCloud, Yahoo, Fastmail, any IMAP", personal: true, enterprise: true },
+      { label: "By-correspondent collection (Outlook-style autocomplete)", personal: true, enterprise: true },
+      { label: "By-folder collection with subfolder inclusion", personal: true, enterprise: true },
+      { label: "Date-range filtering", personal: true, enterprise: true },
       { label: "Another user's mailbox (custodian collection)", personal: false, enterprise: true },
       { label: "OneDrive (custodian)", personal: false, enterprise: true },
       { label: "SharePoint (custodian)", personal: false, enterprise: true },
@@ -107,16 +110,19 @@ export const featureMatrix = [
       { label: "Native .eml preserved as Microsoft stored it", personal: true, enterprise: true },
       { label: "Combined thread PDF in chronological order", personal: true, enterprise: true },
       { label: "Native attachments in original format", personal: true, enterprise: true },
-      { label: "Bates numbering for eDiscovery review", personal: true, enterprise: true },
+      { label: "Bates numbering across email and document phases", personal: true, enterprise: true },
+      { label: "Items.csv load file (machine-readable index by Bates ID)", personal: true, enterprise: true },
+      { label: "Excel index workbook", personal: true, enterprise: true },
     ],
   },
   {
     group: "Chain of custody",
     rows: [
-      { label: "SHA-256 + MD5 hash manifest per file", personal: true, enterprise: true },
+      { label: "SHA-256 + MD5 hash for every file", personal: true, enterprise: true },
       { label: "RFC 3161 timestamp (DigiCert public TSA)", personal: true, enterprise: true },
-      { label: "Chain-of-Custody manifest (operator, tenant, KQL query)", personal: true, enterprise: true },
-      { label: "Deduplication report", personal: true, enterprise: true },
+      { label: "Chain-of-custody manifest (operator, tenant, KQL query)", personal: true, enterprise: true },
+      { label: "Self-running verification script (VerifyTimestamp.bat)", personal: true, enterprise: true },
+      { label: "Deduplication report keyed by Message-ID", personal: true, enterprise: true },
       { label: "Multi-custodian collection records", personal: false, enterprise: true },
     ],
   },
@@ -127,7 +133,7 @@ export const featureMatrix = [
       { label: "Runs on Windows 10/11", personal: true, enterprise: true },
       { label: "No admin consent required", personal: true, enterprise: false },
       { label: "Tenant-wide admin consent supported", personal: false, enterprise: true },
-      { label: "Priority email support (1 business day)", personal: true, enterprise: true },
+      { label: "Email support, 1 business day", personal: true, enterprise: true },
       { label: "Onboarding call for Enterprise rollout", personal: false, enterprise: true },
     ],
   },
@@ -145,10 +151,10 @@ export const audiences = [
   },
   {
     title: "HR investigators",
-    body: "Preserve email surrounding a conduct investigation before custodians know they're under review. The manifest documents the chain of custody; your legal team can attest to it in court.",
+    body: "Preserve email surrounding a conduct investigation before custodians know they're under review. The manifest documents the chain of custody; your legal team can attest to it.",
   },
   {
     title: "Compliance officers",
-    body: "Regulated industries need ad-hoc preservation for SEC, FINRA, OCC, and HIPAA responses. Krellix produces audit-ready output without procurement for a full eDiscovery platform.",
+    body: "Regulated industries need ad-hoc preservation for SEC, FINRA, OCC, and HIPAA responses. Krellix produces a defensible export without procurement for a full eDiscovery platform.",
   },
 ] as const;

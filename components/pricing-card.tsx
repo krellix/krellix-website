@@ -2,34 +2,35 @@ import { Button } from "./button";
 import { cn } from "@/lib/utils";
 
 /**
- * Plan card for /pricing. Two of these appear side-by-side. Prices
+ * Plan card for /pricing. Three of these appear side-by-side. Prices
  * come from siteConfig, not hardcoded, so one source of truth.
- * The Enterprise card uses the seal tint to signal it's the richer
- * artifact — not because it's "premium" in a marketing sense, but
- * because it collects from others and produces cross-custodian
- * records, which is literally what most defensibility disputes
- * come down to.
+ * The seal variant uses the gold tint to single out the recommended
+ * tier — load-bearing visual signal, not decoration.
  */
 export function PricingCard({
   name,
   price,
   period = "/year",
+  priceLabel,
   lede,
   bullets,
   ctaLabel,
   ctaHref,
   variant = "default",
+  badge,
   footnote,
   className,
 }: {
   name: string;
   price: string;
   period?: string;
+  priceLabel?: string;
   lede: string;
   bullets: string[];
   ctaLabel: string;
   ctaHref: string;
   variant?: "default" | "seal";
+  badge?: string;
   footnote?: string;
   className?: string;
 }) {
@@ -44,6 +45,14 @@ export function PricingCard({
         className,
       )}
     >
+      {badge ? (
+        <span
+          className="absolute -top-3 left-7 rounded-sm border border-[var(--color-seal-soft)] bg-[var(--color-seal)] px-2.5 py-0.5 text-[length:var(--text-mono)] font-mono uppercase tracking-[0.08em] text-[#FAFAF7]"
+          aria-hidden="true"
+        >
+          {badge}
+        </span>
+      ) : null}
       <div>
         <div className="flex items-baseline justify-between">
           <h3 className="font-display text-[1.75rem] leading-[1.1] tracking-[-0.015em] text-[color:var(--color-ink)]">
@@ -60,13 +69,18 @@ export function PricingCard({
           {lede}
         </p>
         <div className="mt-6 flex items-baseline gap-2">
-          <span className="font-display text-[clamp(2.5rem,4vw,3rem)] leading-none tracking-[-0.02em] text-[color:var(--color-ink)]">
+          <span className="font-display text-[clamp(2.25rem,3.5vw,2.75rem)] leading-none tracking-[-0.02em] text-[color:var(--color-ink)]">
             {price}
           </span>
           <span className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
             {period}
           </span>
         </div>
+        {priceLabel ? (
+          <p className="mt-2 text-[length:var(--text-body-sm)] text-[color:var(--color-ink-muted)]">
+            {priceLabel}
+          </p>
+        ) : null}
       </div>
 
       <ul className="mt-8 flex-1 space-y-3.5">

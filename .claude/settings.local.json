@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(npx next *)",
+      "Bash(curl -sf -o /dev/null http://localhost:3000/)",
+      "Bash(curl -sI http://localhost:3000/help)",
+      "Bash(curl -sI http://localhost:3000/help/anything-after)",
+      "Bash(curl *)",
+      "Bash(kill %1)",
+      "Bash(pkill -f \"next dev\")"
+    ]
+  }
+}
