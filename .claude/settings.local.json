@@ -8,7 +8,8 @@
       "Bash(curl -sI http://localhost:3000/help/anything-after)",
       "Bash(curl *)",
       "Bash(kill %1)",
-      "Bash(pkill -f \"next dev\")"
+      "Bash(pkill -f \"next dev\")",
+      "Bash(npx tsc *)"
     ]
   }
 }

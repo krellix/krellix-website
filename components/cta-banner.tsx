@@ -4,7 +4,7 @@ import { Reveal } from "./reveal";
 
 export function CtaBanner({
   title = "Ready to talk about a pilot?",
-  lede = "Krellix is in early pilot with a small number of customers. If your matter looks like a fit, send a note — Cole reads every email and replies within one business day.",
+  lede = "Krellix is in early pilot with a small number of customers. If your matter looks like a fit, send a note — we read every email and reply within one business day.",
   primaryLabel = "Request a pilot",
   primaryHref = "/contact",
   secondaryLabel = "See the roadmap",

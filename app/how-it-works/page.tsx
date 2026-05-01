@@ -323,11 +323,11 @@ const walkthrough = [
   {
     title: "Manifest + TSA timestamp",
     body:
-      "When the collection finishes, Krellix writes ChainOfCustody.json — the manifest describing who collected what, from whom, when, and with what query. It hashes that JSON, sends the hash to a public Time Stamp Authority (DigiCert by default, with Sectigo and GlobalSign as failovers), and stores the signed TSR response alongside the manifest. At that point the collection is sealed.",
+      "When the collection finishes, Krellix writes ChainOfCustody.txt — the plain-text manifest describing who collected what, from whom, when, and with what query. It hashes that manifest, sends the hash to a public Time Stamp Authority (DigiCert by default, with Sectigo and GlobalSign as failovers), and stores the signed TSR token in 07_TimestampMaterials/. At that point the collection is sealed.",
   },
   {
     title: "Deliver",
     body:
-      "The export is a folder on your disk. Hand it to opposing counsel, your eDiscovery vendor, or your reviewer as-is. The VERIFY.md inside the 07_TimestampMaterials folder walks any third party through re-hashing the files and re-validating the TSA token with OpenSSL — no Krellix license required to verify.",
+      "The export is a folder on your disk. Hand it to opposing counsel, your eDiscovery vendor, or your reviewer as-is. Anyone who runs the bundled VerifyTimestamp.bat sees three checks pass: the RFC 3161 timestamp token decodes and shows the signing authority and UTC time; the manifest's SHA-256 matches the value sealed into the timestamp; every individual file in the export still hashes to its recorded value. No Krellix license required to verify.",
   },
 ];

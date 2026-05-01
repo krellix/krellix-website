@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Verify a collection",
   description:
-    "Step-by-step instructions for re-hashing every file in a Krellix export and re-validating the RFC 3161 timestamp with OpenSSL. No Krellix license required.",
+    "Step-by-step instructions for re-hashing every file in a Krellix export and re-validating the RFC 3161 timestamp using the bundled VerifyTimestamp.bat script. No Krellix license required.",
   alternates: { canonical: "/docs/chain-of-custody" },
 };
 
@@ -14,130 +14,182 @@ export default function VerifyPage() {
       <p className="eyebrow">Documentation · Verify a collection</p>
       <h1>Verify a Krellix collection from scratch.</h1>
       <p>
-        This page is the same verification procedure bundled inside every Krellix export
-        as <code>07_TimestampMaterials/VERIFY.md</code>. It&apos;s published here so
-        opposing counsel, a reviewer, an expert witness, or a judge can see the steps
-        without needing access to a specific export first.
+        Every Krellix export ships with a self-running verification script,{" "}
+        <code>VerifyTimestamp.bat</code>, sitting at the export root. A reviewer
+        double-clicks it. The script does three things, prints the results, and
+        exits — no Krellix license, no third-party tooling, no command-line skills.
       </p>
       <p>
-        Verification does not require Krellix. It uses <code>sha256sum</code> (any Linux
-        or macOS terminal; Windows via Git Bash or WSL) and <code>openssl</code> (widely
-        preinstalled on macOS and Linux; bundled with Git for Windows).
+        This page walks through what the script does, what each result means, and how
+        a sophisticated reviewer can run the same checks by hand using the standard
+        Windows tools <code>certutil</code> and PowerShell <code>Get-FileHash</code>.
       </p>
 
       <h2 id="what-youre-verifying">What you&apos;re verifying</h2>
       <p>Three things, in this order:</p>
       <ol>
         <li>
-          <strong>File integrity.</strong> That every file in the export still hashes to
-          the value recorded in the hash manifest. This catches accidental or deliberate
-          modification after collection.
+          <strong>Timestamp authenticity.</strong> That{" "}
+          <code>07_TimestampMaterials/TimestampProof.tsr</code> is a valid RFC 3161
+          timestamp token, with a readable signing TSA, signing certificate, and UTC
+          timestamp.
         </li>
         <li>
-          <strong>Manifest integrity.</strong> That the hash of{" "}
-          <code>ChainOfCustody.json</code> matches what was sent to the TSA. This catches
-          modification of the manifest itself.
+          <strong>Manifest integrity.</strong> That the SHA-256 of{" "}
+          <code>06_HashManifests/ChainOfCustody.txt</code> matches the value that was
+          submitted to the TSA. This catches modification of the manifest itself.
         </li>
         <li>
-          <strong>Timestamp signature.</strong> That the TSA response (.tsr) is a valid
-          signature over the manifest hash, issued by the TSA certificate in{" "}
-          <code>TSA.pem</code>, at the UTC time the response records.
+          <strong>File integrity.</strong> That every file listed in{" "}
+          <code>06_HashManifests/FileHashes.txt</code> still hashes to its recorded
+          value. This catches accidental or deliberate modification of any individual
+          file.
         </li>
       </ol>
       <p>
-        If any of the three fails, the collection is <em>not</em> defensible and should
-        not be relied on. If all three pass, you have cryptographic evidence that the
-        collection existed, unchanged, at the recorded time.
+        If any of the three fails, the export is not defensible and should not be
+        relied on. If all three pass, you have cryptographic evidence that the
+        collection existed, unchanged, at the recorded UTC time.
       </p>
 
-      <h2 id="step-1-hash-check">Step 1 — Verify file hashes</h2>
+      <h2 id="run-the-script">Run the script</h2>
+      <ol>
+        <li>Open the export folder in Windows Explorer.</li>
+        <li>
+          Double-click <code>VerifyTimestamp.bat</code>. It will open a console
+          window and run automatically.
+        </li>
+        <li>
+          Read the three result blocks. The script will pause at the end so you can
+          see the output before the window closes.
+        </li>
+      </ol>
       <p>
-        From the export root (the folder containing the numbered subfolders), run:
-      </p>
-      <pre><code>cd 06_HashManifests{"\n"}sha256sum -c Hashes.sha256.txt</code></pre>
-      <p>
-        Expected output: one <code>OK</code> line per file in the export, with no lines
-        reading <code>FAILED</code>. If any file reports FAILED, stop — the export has
-        been altered since collection and its defensibility claims no longer hold.
-      </p>
-      <p>
-        For MD5 (if your downstream tooling prefers it):
-      </p>
-      <pre><code>md5sum -c Hashes.md5.txt</code></pre>
-
-      <h2 id="step-2-manifest-hash">Step 2 — Verify the manifest hash</h2>
-      <p>
-        Compute the SHA-256 of the manifest and compare to the value recorded in the
-        manifest&apos;s own <code>timestamp.manifestDigest</code> field:
-      </p>
-      <pre><code>cd ../07_TimestampMaterials{"\n"}sha256sum ChainOfCustody.json</code></pre>
-      <p>
-        Open <code>ChainOfCustody.json</code> in a text editor. Find the{" "}
-        <code>timestamp</code> object near the end of the file. The{" "}
-        <code>manifestDigest</code> field should equal the hash you just computed.
-      </p>
-      <p>
-        If the two values match, nothing has modified the manifest since Krellix sealed
-        it. If they don&apos;t match, the manifest has been edited after collection and the
-        timestamp no longer covers the current contents.
+        The script uses tools built into Windows: <code>certutil</code> for ASN.1
+        decoding and hash computation, and PowerShell <code>Get-FileHash</code> for
+        the per-file integrity sweep. There is nothing to install, and the script is
+        plain text — open it in Notepad to read exactly what it does before running it.
       </p>
 
-      <h2 id="step-3-verify-timestamp">Step 3 — Verify the TSA timestamp signature</h2>
+      <h2 id="what-the-script-prints">What the script prints</h2>
+
+      <h3 id="block-1-timestamp">Block 1 — Timestamp token</h3>
       <p>
-        The <code>.tsr</code> file is a PKCS#7 signed structure. OpenSSL can verify it
-        against the TSA certificate chain captured at timestamping:
+        The script runs <code>certutil -asn</code> against{" "}
+        <code>TimestampProof.tsr</code> and prints the decoded ASN.1 structure. Look
+        for the signing TSA name (DigiCert, Sectigo, or GlobalSign), the signing
+        certificate&apos;s serial number, and the <code>genTime</code> field — the
+        UTC moment the TSA recorded.
       </p>
-      <pre><code>{`openssl ts -verify \\
-  -data ChainOfCustody.json \\
-  -in   manifest.tsr \\
-  -CAfile TSA.pem`}</code></pre>
       <p>
-        Expected output: <code>Verification: OK</code>. Anything else means either the TSA
-        token does not cover the current manifest hash, the TSA certificate chain is
-        broken, or the <code>.tsr</code> file has been tampered with.
+        That UTC time is what opposing counsel would have to dispute if they wanted
+        to challenge when the collection was sealed.
       </p>
 
-      <h3 id="extract-the-signing-time">Extract the signing time</h3>
+      <h3 id="block-2-manifest">Block 2 — Manifest hash</h3>
       <p>
-        To read the UTC time the TSA issued the signature — the moment the collection was
-        sealed — run:
+        The script computes <code>SHA-256(ChainOfCustody.txt)</code> using PowerShell{" "}
+        <code>Get-FileHash</code> and compares it against the expected hash that was
+        submitted to the TSA at sealing time. The expected hash is embedded in the
+        script when Krellix generates it, so the comparison is local — no network
+        call.
       </p>
-      <pre><code>openssl ts -reply -in manifest.tsr -text | grep "Time stamp"</code></pre>
+      <ul>
+        <li>
+          <strong>PASS</strong> — the manifest matches what the TSA signed. Together
+          with Block 1, this proves the manifest existed in its current form at the
+          recorded UTC time.
+        </li>
+        <li>
+          <strong>FAIL</strong> — the manifest has been edited since collection. The
+          timestamp no longer covers the current contents and the export is not
+          defensible.
+        </li>
+      </ul>
+
+      <h3 id="block-3-files">Block 3 — Per-file hashes</h3>
       <p>
-        This prints the exact <code>genTime</code> from the TSA response. That time is
-        what opposing counsel would have to dispute if they wanted to challenge when the
-        collection occurred.
+        The script reads <code>FileHashes.txt</code> line by line and re-hashes every
+        file in the export, again using <code>Get-FileHash</code>. Each file gets one
+        of four results:
+      </p>
+      <ul>
+        <li>
+          <strong>PASS</strong> — the file&apos;s SHA-256 matches the value recorded
+          at collection time.
+        </li>
+        <li>
+          <strong>FAIL</strong> — the file is present but its hash does not match. The
+          file has been modified.
+        </li>
+        <li>
+          <strong>MISSING</strong> — a file listed in the manifest is no longer in the
+          export. Something has been deleted.
+        </li>
+        <li>
+          <strong>LOCKED</strong> — the file exists but couldn&apos;t be opened for
+          hashing because another program is using it (commonly Excel, Notepad, or a
+          OneDrive/Dropbox sync agent). Close the program and re-run the script.
+        </li>
+      </ul>
+      <p>
+        If every file is PASS, the export is intact. Any FAIL or MISSING means the
+        export has been altered and its defensibility claims no longer hold.
       </p>
 
-      <h2 id="walk-through-manually">Walking through manually in a hearing</h2>
+      <h2 id="advanced-manual">Advanced — verify by hand</h2>
+      <p>
+        A sophisticated reviewer can reproduce every check the script makes using the
+        standard Windows tools. Open <code>cmd.exe</code> at the export root and run:
+      </p>
+      <p>Decode and inspect the timestamp token:</p>
+      <pre><code>certutil -asn 07_TimestampMaterials\TimestampProof.tsr</code></pre>
+      <p>
+        The decoded output shows the signing TSA, the certificate chain, the policy
+        OID, and the <code>genTime</code>. The certificate chain is embedded in the
+        token itself — verification does not require fetching anything from the TSA.
+      </p>
+      <p>Compute the SHA-256 of the manifest:</p>
+      <pre><code>certutil -hashfile 06_HashManifests\ChainOfCustody.txt SHA256</code></pre>
+      <p>
+        Compare the printed value to the expected hash recorded in{" "}
+        <code>07_TimestampMaterials/TimestampInfo.txt</code> and used as the input to
+        the timestamp request. They should be identical.
+      </p>
+      <p>Hash any individual file to confirm it matches the manifest:</p>
+      <pre><code>certutil -hashfile {`<path-to-file>`} SHA256</code></pre>
+      <p>
+        Look up the same path in <code>FileHashes.txt</code> and confirm the
+        SHA-256 values are byte-identical. Repeat for as many files as the
+        engagement requires.
+      </p>
+
+      <h2 id="walk-through-manually">Walking through it in a hearing</h2>
       <p>
         If you need to do this in front of a judge or an expert, the short script is:
       </p>
       <ol>
         <li>
-          Mount the export. Show the seven folders exist and are named as the
-          documentation describes.
+          Open the export folder. Show the numbered structure exists and the master
+          PDF and verification script sit at the root.
         </li>
         <li>
-          Run <code>sha256sum -c Hashes.sha256.txt</code>. Show the <code>OK</code>{" "}
-          lines.
+          Double-click <code>VerifyTimestamp.bat</code>. Show all three blocks pass:
+          timestamp valid, manifest matches, every file hashes correctly.
         </li>
         <li>
-          Run <code>sha256sum ChainOfCustody.json</code> and show the output matches the{" "}
-          <code>manifestDigest</code> field inside the JSON.
+          Open <code>07_TimestampMaterials/TimestampInfo.txt</code>. Show the TSA
+          name, signing time, and verification commands recorded in plain text.
         </li>
         <li>
-          Run the <code>openssl ts -verify</code> command and show{" "}
-          <code>Verification: OK</code>.
-        </li>
-        <li>
-          Run <code>openssl ts -reply</code> to show the <code>genTime</code> — the
-          third-party attested timestamp.
+          Open <code>06_HashManifests/ChainOfCustody.txt</code>. Read the operator,
+          custodian, search criteria, and counts directly from the manifest the TSA
+          signed.
         </li>
       </ol>
       <p>
-        The entire walkthrough is four commands. The foundation-witness time per
-        collection is about two minutes.
+        The entire walkthrough is one double-click and a couple of file opens. The
+        foundation-witness time per collection is about two minutes.
       </p>
 
       <h2 id="common-questions">Common questions during verification</h2>
@@ -145,27 +197,31 @@ export default function VerifyPage() {
       <p>
         RFC 3161 timestamps are designed to remain valid even after the signing
         certificate is revoked, <em>as long as the revocation happened after the
-        timestamp was issued</em>. The TSA provides a CRL or OCSP response that a
-        verifier can use to confirm the cert was valid at <code>genTime</code>. The
-        timestamp token embeds the certificate chain, and{" "}
-        <code>TSA.pem</code> was captured at timestamping — so everything you need for
-        revocation-aware verification is in the export, not fetched from the TSA later.
+        timestamp was issued</em>. The TSA&apos;s certificate chain — root,
+        intermediate, and signing cert — is embedded inside{" "}
+        <code>TimestampProof.tsr</code> at sealing time, so a verifier can confirm
+        the cert was valid at <code>genTime</code> without fetching anything from the
+        TSA. There is no separate certificate file to keep track of.
       </p>
       <h3 id="different-tsa">&ldquo;What if the collection used a different TSA?&rdquo;</h3>
       <p>
-        Krellix defaults to DigiCert and falls back to Sectigo and GlobalSign if DigiCert
-        is unavailable. The TSA used is recorded in <code>ChainOfCustody.json</code> under{" "}
-        <code>timestamp.tsa</code>, and <code>TSA.pem</code> contains the certificate chain
-        for whichever TSA actually signed the token. The verification commands are
-        identical regardless of which TSA is involved.
+        Krellix tries DigiCert first, then Sectigo, then GlobalSign — whichever one
+        responds successfully signs the token. The TSA actually used is recorded in{" "}
+        <code>07_TimestampMaterials/TimestampInfo.txt</code> in plain text, and the
+        certificate chain for that TSA is embedded inside{" "}
+        <code>TimestampProof.tsr</code>. The verification process is identical
+        regardless of which TSA signed the token, because every check operates on the
+        token itself.
       </p>
       <h3 id="re-hash">&ldquo;Can I re-verify this ten years from now?&rdquo;</h3>
       <p>
-        Yes, if you still have the export folder. The hash algorithms (SHA-256 and MD5)
-        will still work. The TSA certificate chain in <code>TSA.pem</code> will still
-        verify the timestamp token — that&apos;s the point of capturing the chain at seal
-        time. The only long-term risk is a future cryptographic break of SHA-256, which
-        would be a problem for the entire industry, not specifically Krellix.
+        Yes, as long as you still have the export folder. SHA-256 will still be a
+        standard hash function. <code>certutil</code> and PowerShell are built into
+        Windows. The TSA certificate chain captured inside{" "}
+        <code>TimestampProof.tsr</code> will still verify the timestamp — that&apos;s
+        the point of embedding the chain at seal time. The only long-term risk is a
+        future cryptographic break of SHA-256, which would be a problem for the
+        entire industry, not specifically Krellix.
       </p>
 
       <h2 id="related">Related</h2>

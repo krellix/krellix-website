@@ -169,11 +169,11 @@ export default function EnterpriseSetupPage() {
         custodians, run one collection per custodian; Krellix writes each into its own
         timestamped subfolder with its own manifest. At delivery time, zip the subfolders
         together and include a short cover letter referencing the collection IDs — those
-        IDs appear in each ChainOfCustody.json and are stable.
+        IDs appear in each ChainOfCustody.txt and are stable.
       </p>
       <p>
         Deduplication across custodians is handled by matching SHA-256 hashes across the
-        per-custodian manifests. The <code>DeduplicationReport.csv</code> in each
+        per-custodian manifests. The <code>DeduplicationReport.txt</code> in each
         collection lists hashes and gives you the inputs for cross-custodian dedup without
         having to open every file.
       </p>

@@ -9,8 +9,8 @@ import { siteConfig } from "@/lib/site-config";
  * Honest contact form for pilot inquiries. There is no backend
  * provisioning system; the form composes a mailto: link that opens
  * the user's email client with a prefilled message to support@.
- * That keeps the path between a prospect and Cole's inbox direct
- * and obvious — no submit-and-pray.
+ * That keeps the path between a prospect and the support inbox
+ * direct and obvious — no submit-and-pray.
  */
 export function ContactForm({ className }: { className?: string }) {
   const [submitted, setSubmitted] = React.useState(false);

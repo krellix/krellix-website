@@ -136,13 +136,14 @@ export default function TroubleshootingPage() {
         A specific message is corrupt in the source mailbox (usually very old messages
         with non-standard MIME encoding, or messages that Outlook&apos;s offline cache has
         partially synced). Krellix skips the message, logs it to{" "}
-        <code>04_Reports/SkippedItems.csv</code>, and continues.
+        <code>04_Reports/Errors.csv</code> (machine-readable) and{" "}
+        <code>04_Reports/ProcessingErrorReport.txt</code> (human-readable), and continues.
       </p>
       <p>
-        <strong>Fix:</strong> review <code>SkippedItems.csv</code> after the collection.
-        For each skipped message, try opening it in the source mailbox; usually the
-        message is unrecoverable at the source too. The manifest discloses the count of
-        skipped items so opposing counsel can&apos;t claim you hid something.
+        <strong>Fix:</strong> review <code>Errors.csv</code> after the collection. For
+        each skipped message, try opening it in the source mailbox; usually the message
+        is unrecoverable at the source too. The manifest discloses the count of skipped
+        items so opposing counsel can&apos;t claim you hid something.
       </p>
 
       <h2 id="timestamping">Timestamping errors</h2>
@@ -176,10 +177,11 @@ export default function TroubleshootingPage() {
 
       <h2 id="verification">Verification errors</h2>
 
-      <h3 id="hash-mismatch">sha256sum reports FAILED on a file</h3>
+      <h3 id="hash-mismatch">VerifyTimestamp.bat reports FAIL on a file</h3>
       <p>
         One or more files in the export have been modified since collection, or the file
-        is corrupt on disk.
+        is corrupt on disk. The script&apos;s third block prints FAIL for any file whose
+        SHA-256 no longer matches the value recorded in <code>FileHashes.txt</code>.
       </p>
       <p>
         <strong>Fix:</strong> do not ship the export. Re-run the collection. If the
@@ -188,11 +190,12 @@ export default function TroubleshootingPage() {
         overwrite the manifest — that invalidates the TSA timestamp.
       </p>
 
-      <h3 id="tsa-verify-failed">openssl ts -verify returns &ldquo;message imprint mismatch&rdquo;</h3>
+      <h3 id="manifest-mismatch">VerifyTimestamp.bat reports a manifest mismatch</h3>
       <p>
-        The manifest hash in the .tsr doesn&apos;t match the current hash of{" "}
-        <code>ChainOfCustody.json</code>. Something has modified the manifest since
-        Krellix sealed it.
+        The script&apos;s second block — the SHA-256 of{" "}
+        <code>06_HashManifests/ChainOfCustody.txt</code> — does not match the expected
+        value embedded in the script at sealing time. Something has modified the manifest
+        since Krellix sealed it, and the timestamp no longer covers the current contents.
       </p>
       <p>
         <strong>Fix:</strong> treat the collection as unsealed. If you have a backup of
@@ -200,17 +203,16 @@ export default function TroubleshootingPage() {
         defensibility is compromised and you&apos;ll need to re-run.
       </p>
 
-      <h3 id="tsa-chain-broken">unable to get local issuer certificate</h3>
+      <h3 id="locked-file">VerifyTimestamp.bat reports LOCKED on a file</h3>
       <p>
-        The TSA.pem file is missing or truncated, or you&apos;re running the verify command
-        from outside the <code>07_TimestampMaterials/</code> folder and OpenSSL can&apos;t
-        find it.
+        The file exists but couldn&apos;t be opened for hashing because another program is
+        using it.
       </p>
       <p>
-        <strong>Fix:</strong> run the command from inside{" "}
-        <code>07_TimestampMaterials/</code> so relative paths resolve. If{" "}
-        <code>TSA.pem</code> is missing or empty, the export was damaged — don&apos;t rely on
-        it. Look for the original zipped export and re-extract.
+        <strong>Fix:</strong> close any program that has the file open — Excel, Word,
+        Notepad, a PDF viewer, or a OneDrive/Dropbox sync agent are the usual culprits —
+        and re-run the script. LOCKED is not a verification failure on its own; it just
+        means the script couldn&apos;t complete the check until the file is released.
       </p>
 
       <h2 id="still-stuck">Still stuck?</h2>

@@ -209,7 +209,7 @@ const faqs = [
   },
   {
     q: "What happens to my exports if I don't renew?",
-    a: "Your exports are yours. They are plain .eml files, plain PDFs, plain JSON, and plain TSA tokens. Nothing about them requires Krellix to verify — a lapsed license doesn't make a past collection inadmissible. The renewal is for the ability to make new collections, not to read old ones.",
+    a: "Your exports are yours. They are plain .eml files, plain PDFs, plain-text manifests, and plain TSA tokens. Nothing about them requires Krellix to verify — a lapsed license doesn't make a past collection inadmissible. The renewal is for the ability to make new collections, not to read old ones.",
   },
   {
     q: "Can we expense it? Can IT expense it?",

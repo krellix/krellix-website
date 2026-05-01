@@ -16,7 +16,6 @@ export function OrganizationSchema() {
     alternateName: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
-    founder: { "@type": "Person", name: siteConfig.founder },
     foundingDate: String(siteConfig.yearFounded),
     email: siteConfig.contact.email,
     address: {
@@ -26,11 +25,6 @@ export function OrganizationSchema() {
       addressCountry: siteConfig.location.country,
     },
     areaServed: { "@type": "Country", name: "United States" },
-    parentOrganization: {
-      "@type": "Organization",
-      name: siteConfig.parent.name,
-      url: siteConfig.parent.url,
-    },
     knowsAbout: [
       "Defensible collection",
       "Chain of custody",

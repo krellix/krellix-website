@@ -371,7 +371,7 @@ const comingSoon = [
 const dataFlow = [
   { type: "Collected messages and attachments", location: "Operator's local disk, under the export folder they chose" },
   { type: "SHA-256 / MD5 hashes", location: "Operator's local disk, inside 06_HashManifests/" },
-  { type: "Chain-of-custody manifest", location: "Operator's local disk, inside 07_TimestampMaterials/" },
+  { type: "Chain-of-custody manifest", location: "Operator's local disk, inside 06_HashManifests/" },
   { type: "Hash of the manifest (for TSA request)", location: "Sent to a public Time Stamp Authority — DigiCert, Sectigo, or GlobalSign" },
   { type: "Access token (OAuth, short-lived)", location: "Windows DPAPI-protected token cache, operator's user profile only" },
   { type: "Refresh token", location: "Same DPAPI-protected cache, cleared on sign-out" },

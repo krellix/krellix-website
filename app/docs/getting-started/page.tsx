@@ -99,10 +99,10 @@ export default function GettingStartedPage() {
       <h2 id="seal">Seal and deliver</h2>
       <p>
         When the collection finishes, Krellix writes{" "}
-        <code>ChainOfCustody.json</code>, hashes it, sends the hash to DigiCert&apos;s public
-        Time Stamp Authority, and stores the signed timestamp response next to the
-        manifest. At that point the export is sealed — any modification to any file in the
-        export will break the chain on verification.
+        <code>ChainOfCustody.txt</code>, hashes it, sends the hash to DigiCert&apos;s public
+        Time Stamp Authority, and stores the signed timestamp response in{" "}
+        <code>07_TimestampMaterials/</code>. At that point the export is sealed — any
+        modification to any file in the export will break the chain on verification.
       </p>
       <p>
         The export is a folder on your disk. You can zip it, copy it to a USB stick, upload
@@ -112,8 +112,10 @@ export default function GettingStartedPage() {
 
       <h2 id="verify">Verify (optional but recommended)</h2>
       <p>
-        Before you deliver, run the verification script yourself. It&apos;s a five-line
-        OpenSSL command documented in{" "}
+        Before you deliver, run the verification script yourself. Double-click{" "}
+        <code>VerifyTimestamp.bat</code> at the export root — it re-hashes every file and
+        re-validates the RFC 3161 timestamp using built-in Windows tools. The full
+        walkthrough is in{" "}
         <Link href="/docs/chain-of-custody">Verify a collection</Link>. If verification
         fails on a brand-new export, something is wrong — don&apos;t ship a collection you
         haven&apos;t successfully verified.

@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
-  authors: [{ name: siteConfig.founder }],
-  creator: siteConfig.founder,
+  authors: [{ name: siteConfig.legalName }],
+  creator: siteConfig.legalName,
   publisher: siteConfig.legalName,
   keywords: [
     "defensible collection",

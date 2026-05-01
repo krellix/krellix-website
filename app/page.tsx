@@ -250,10 +250,10 @@ export default function HomePage() {
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="mt-6 max-w-[50ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
-                  Every export includes a signed JSON record of exactly who collected what,
-                  when, from whom, and what query was used. It&apos;s timestamped by a public
-                  Time Stamp Authority so the collection time isn&apos;t your word against
-                  opposing counsel&apos;s — it&apos;s DigiCert&apos;s.
+                  Every export includes a signed plain-text manifest of exactly who collected
+                  what, from whom, when, and how. Hash the manifest, send the hash to a public
+                  Time Stamp Authority, archive the signed response. The verification process
+                  is bundled with every export.
                 </p>
               </Reveal>
               <Reveal delay={0.16}>

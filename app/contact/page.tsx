@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Talk to us about a pilot",
   description:
-    "Krellix is in early pilot with a small number of customers. If you think it might fit your work, send a note — Cole reads every email and replies within one business day.",
+    "Krellix is in early pilot with a small number of customers. If you think it might fit your work, send a note — we read every email and reply within one business day.",
   alternates: { canonical: "/contact" },
 };
 
@@ -100,7 +100,7 @@ export default function ContactPage() {
 
 const expectations = [
   {
-    title: "A real reply from Cole",
+    title: "A real reply, same day",
     body: "Within one business day. No autoresponders, no SDR queue, no qualification form.",
   },
   {

@@ -13,8 +13,6 @@ export const siteConfig = {
     "Krellix collects email and documents from Microsoft 365 or IMAP, hashes every file, and RFC 3161 timestamps the collection. Built for solo attorneys, in-house counsel, and HR investigators who need a defensible chain of custody without a Purview seat or a vendor invoice.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://krellix.app",
   ogImage: "/og-default.png",
-  founder: "Cole Flanders",
-  founderTitle: "Founder",
   yearFounded: 2026,
   appVersion: "3.1.0",
   location: { city: "Louisville", region: "KY", country: "US" },
@@ -29,10 +27,6 @@ export const siteConfig = {
     firmAnnual: 799,
     enterpriseAnnual: 2499,
     startingFromEnterprise: true,
-  },
-  parent: {
-    name: "Cole Christopher Solutions LLC",
-    url: "https://colecsolutions.com",
   },
   social: {
     linkedin: "https://www.linkedin.com/company/krellix",
