@@ -39,13 +39,13 @@ export default function HowItWorksPage() {
             <Reveal>
               <ModeCard
                 name="Personal"
-                lede="The operator is the custodian. You're preserving your own email with a named contact."
-                audience="Solo and small-firm attorneys. An operator collecting their client correspondence at the start of a matter."
+                lede="The operator is the custodian. You're preserving your own email — by correspondent or by folder."
+                audience="Solo and small-firm attorneys. An operator collecting their client correspondence or matter folders at the start of a matter."
                 mailbox="Your own M365 mailbox, via /me/messages"
-                filter="From/to filter against a named contact"
+                filter="By correspondent (Outlook-style autocomplete), by folder (with subfolder inclusion), or by date range"
                 docs="Email only. No OneDrive or SharePoint."
                 consent="No admin consent required. User-consentable scopes — you sign in and collect in under a minute."
-                scopes={["Mail.Read", "User.Read", "offline_access"]}
+                scopes={["Mail.Read", "User.Read", "People.Read", "offline_access"]}
               />
             </Reveal>
             <Reveal delay={0.08}>
@@ -61,6 +61,7 @@ export default function HowItWorksPage() {
                   "User.Read",
                   "Mail.Read",
                   "Mail.Read.Shared",
+                  "People.Read",
                   "Files.Read.All",
                   "Sites.Read.All",
                   "offline_access",
@@ -182,8 +183,9 @@ export default function HowItWorksPage() {
                   <p>
                     If the custodian is <span className="text-[color:var(--color-ink)]">you</span> —
                     if what you&apos;re preserving is your own correspondence with somebody
-                    else — pick Personal. No admin consent, no mailbox permission grant. You
-                    can be collecting in under a minute.
+                    else, or your own matter folder — pick Personal. Collect by correspondent
+                    or by folder (with subfolders, scoped by date range). No admin consent,
+                    no mailbox permission grant. You can be collecting in under a minute.
                   </p>
                   <p>
                     If the custodian is <span className="text-[color:var(--color-ink)]">someone else in your tenant</span> —
@@ -306,7 +308,7 @@ const walkthrough = [
   {
     title: "Identify the custodian and scope the query",
     body:
-      "In Personal mode, enter the contact you corresponded with. In Enterprise mode, enter the custodian's UPN and optionally restrict by date range, subject keyword, folder, or KQL filter. Krellix translates your inputs into a Graph $filter expression and shows it to you before the collection begins.",
+      "In Personal mode, choose a correspondent (Outlook-style autocomplete) or pick a folder, with optional subfolder inclusion and a date range. In Enterprise mode, enter the custodian's UPN and optionally restrict by date range, subject keyword, folder, or KQL filter. Krellix translates your inputs into a Graph $filter expression and shows it to you before the collection begins.",
   },
   {
     title: "Pre-flight probe",

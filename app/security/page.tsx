@@ -430,6 +430,11 @@ const scopes = [
     why: "Read mail from /me/messages in Personal mode, and fall back to the operator's own mailbox for self-collection scenarios in Enterprise mode.",
   },
   {
+    name: "People.Read",
+    mode: "Both modes",
+    why: "Power the Outlook-style autocomplete on the by-correspondent picker — surface the people you most often email so you don't have to type a full address. Read-only against your own people graph; no contact data is exported or sent off the machine.",
+  },
+  {
     name: "offline_access",
     mode: "Both modes",
     why: "Obtain a refresh token so a long-running collection doesn't require the operator to re-authenticate every hour.",
