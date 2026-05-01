@@ -74,7 +74,6 @@ export const footerNav: { heading: string; links: NavLink[] }[] = [
   {
     heading: "Company",
     links: [
-      { label: "About Krellix", href: "/about" },
       { label: "Contact sales", href: "mailto:sales@krellix.app" },
       { label: "Support", href: "mailto:support@krellix.app" },
     ],
@@ -139,7 +138,7 @@ export const featureMatrix = [
   },
 ] as const;
 
-/** Audiences used on the homepage and About page. */
+/** Audiences used on the homepage. */
 export const audiences = [
   {
     title: "Solo & small-firm attorneys",
