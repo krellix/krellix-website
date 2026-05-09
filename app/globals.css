@@ -153,7 +153,10 @@
   }
 
   /* Ensure foreground sits above the grain. */
-  body > * {
+  body > header,
+  body > main,
+  body > footer,
+  body > a {
     position: relative;
     z-index: 1;
   }
