@@ -6,7 +6,19 @@ import { siteConfig, footerNav } from "@/lib/site-config";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg)]">
+    <footer className="relative border-t border-[var(--color-border-strong)] bg-[var(--color-bg)]">
+      {/* Running-foot foliation strip */}
+      <div className="border-b border-[var(--color-border)] bg-[var(--color-bg-deep)]">
+        <Container width="wide" className="flex items-center justify-between py-2.5">
+          <p className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+            Krellix Mail · Edition v{siteConfig.appVersion}
+          </p>
+          <p className="hidden font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)] md:block">
+            Filed in {siteConfig.location.city}, {siteConfig.location.region}
+          </p>
+        </Container>
+      </div>
+
       <Container width="wide" className="py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-4">
@@ -14,15 +26,18 @@ export function Footer() {
             <p className="mt-5 max-w-sm text-[length:var(--text-body-sm)] leading-[1.55] text-[color:var(--color-ink-muted)]">
               {siteConfig.tagline}
             </p>
-            <p className="mt-6 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
-              {siteConfig.location.city}, {siteConfig.location.region}
-            </p>
-            <a
-              href={`mailto:${siteConfig.contact.email}`}
-              className="mt-2 block font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink)] hover:text-[color:var(--color-accent)]"
-            >
-              {siteConfig.contact.email}
-            </a>
+            <div className="mt-7">
+              <p className="eyebrow">Office of record</p>
+              <p className="mt-2 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink)]">
+                {siteConfig.location.city}, {siteConfig.location.region}
+              </p>
+              <a
+                href={`mailto:${siteConfig.contact.email}`}
+                className="mt-1 inline-block font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)] underline decoration-1 underline-offset-4 hover:text-[color:var(--color-accent)]"
+              >
+                {siteConfig.contact.email}
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-8 md:col-span-8 md:grid-cols-4">
@@ -46,13 +61,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-[var(--color-border)] pt-8 text-[length:var(--text-body-sm)] text-[color:var(--color-ink-muted)] md:flex-row md:items-center">
-          <div className="flex flex-col gap-1">
+        <div className="mt-16">
+          <div className="rule-double" />
+          <div className="mt-6 flex flex-col items-start justify-between gap-3 text-[length:var(--text-body-sm)] text-[color:var(--color-ink-muted)] md:flex-row md:items-center">
             <p>© {year} {siteConfig.legalName}. All rights reserved.</p>
+            <p className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)]">
+              Composed in Louisville · Set in Fraunces &amp; Inter Tight
+            </p>
           </div>
-          <p className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
-            v{siteConfig.appVersion} · Built in {siteConfig.location.city}.
-          </p>
         </div>
       </Container>
     </footer>

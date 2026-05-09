@@ -2,10 +2,8 @@ import { Button } from "./button";
 import { cn } from "@/lib/utils";
 
 /**
- * Plan card for /pricing. Three of these appear side-by-side. Prices
- * come from siteConfig, not hardcoded, so one source of truth.
- * The seal variant uses the gold tint to single out the recommended
- * tier — load-bearing visual signal, not decoration.
+ * Plan card for /pricing. The seal variant uses the gold tint to
+ * single out the recommended tier — load-bearing visual signal.
  */
 export function PricingCard({
   name,
@@ -38,38 +36,42 @@ export function PricingCard({
   return (
     <div
       className={cn(
-        "relative flex h-full flex-col rounded-md border p-7 md:p-8",
+        "relative flex h-full flex-col border p-7 md:p-8",
         isSeal
-          ? "border-[var(--color-seal-soft)] bg-[var(--color-seal-tint)]"
-          : "border-[var(--color-border-strong)] bg-[var(--color-bg)]",
+          ? "border-[var(--color-seal-soft)] bg-[var(--color-seal-paper)] shadow-[0_18px_40px_-32px_rgba(155,111,34,0.45)]"
+          : "border-[var(--color-rule)] bg-[var(--color-bg)]",
         className,
       )}
     >
+      {/* Folio mark — top-right corner */}
+      <span
+        aria-hidden="true"
+        className="absolute right-5 top-4 font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)]"
+      >
+        Tier {name === "Solo" ? "I" : name === "Firm" ? "II" : "III"}
+      </span>
+
       {badge ? (
         <span
-          className="absolute -top-3 left-7 rounded-sm border border-[var(--color-seal-soft)] bg-[var(--color-seal)] px-2.5 py-0.5 text-[length:var(--text-mono)] font-mono uppercase tracking-[0.08em] text-[#FAFAF7]"
+          className="absolute -top-3 left-7 inline-flex items-center gap-1.5 rounded-[2px] border border-[var(--color-seal-deep)] bg-[var(--color-seal)] px-2.5 py-0.5 text-[length:var(--text-mono-sm)] font-mono uppercase tracking-[0.14em] text-[color:var(--color-bg)]"
           aria-hidden="true"
         >
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-seal-paper)]" />
           {badge}
         </span>
       ) : null}
+
       <div>
-        <div className="flex items-baseline justify-between">
-          <h3 className="font-display text-[1.75rem] leading-[1.1] tracking-[-0.015em] text-[color:var(--color-ink)]">
-            {name}
-          </h3>
-          {isSeal ? (
-            <span
-              className="inline-block h-2 w-2 rounded-full bg-[var(--color-seal)]"
-              aria-hidden="true"
-            />
-          ) : null}
-        </div>
-        <p className="mt-3 text-[length:var(--text-body)] leading-[1.55] text-[color:var(--color-ink-muted)]">
+        <h3 className="font-display text-[2rem] leading-[1.05] tracking-[-0.018em] text-[color:var(--color-ink)]">
+          {name}
+        </h3>
+
+        <p className="mt-3 max-w-[28ch] text-[length:var(--text-body)] leading-[1.55] text-[color:var(--color-ink-muted)]">
           {lede}
         </p>
-        <div className="mt-6 flex items-baseline gap-2">
-          <span className="font-display text-[clamp(2.25rem,3.5vw,2.75rem)] leading-none tracking-[-0.02em] text-[color:var(--color-ink)]">
+
+        <div className="mt-7 flex items-baseline gap-2 border-t border-[color:color-mix(in_srgb,var(--color-rule)_60%,transparent)] pt-6">
+          <span className="font-display text-[clamp(2.5rem,3.6vw,3rem)] leading-none tracking-[-0.022em] text-[color:var(--color-ink)]">
             {price}
           </span>
           <span className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
@@ -87,16 +89,16 @@ export function PricingCard({
         {bullets.map((bullet) => (
           <li key={bullet} className="flex items-start gap-3 text-[length:var(--text-body)] leading-[1.55] text-[color:var(--color-ink)]">
             <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
               fill="none"
               aria-hidden="true"
               className="mt-[0.35rem] flex-shrink-0"
             >
               <path
-                d="M3 8.5l3.5 3.5L13 4.5"
-                stroke={isSeal ? "var(--color-seal)" : "var(--color-accent)"}
+                d="M2 7.5l3.5 3.5L12 3.5"
+                stroke={isSeal ? "var(--color-seal-deep)" : "var(--color-accent)"}
                 strokeWidth="1.6"
                 strokeLinecap="square"
                 strokeLinejoin="miter"
@@ -107,7 +109,7 @@ export function PricingCard({
         ))}
       </ul>
 
-      <div className="mt-8 border-t border-[var(--color-border)] pt-6">
+      <div className="mt-8 border-t border-[color:color-mix(in_srgb,var(--color-rule)_60%,transparent)] pt-6">
         <Button
           href={ctaHref}
           variant={isSeal ? "seal" : "primary"}

@@ -3,36 +3,49 @@ import { cn } from "@/lib/utils";
 /**
  * Visual mock of a chain-of-custody manifest excerpt. Used on the
  * homepage as a concrete demonstration of the output — the single
- * most credibility-defining artifact Krellix produces. Not the real
- * file; the real file is a multi-kilobyte plain-text document
- * delivered inside the export.
- *
- * Every value here is deliberately plausible: TSA is a real public
- * authority, OData filter is the real query shape Graph accepts,
- * tenant ID uses the real GUID format Microsoft returns.
+ * most credibility-defining artifact Krellix produces.
  */
 export function ManifestSample({ className }: { className?: string }) {
   return (
-    <div
-      className={cn(
-        "overflow-hidden rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] font-mono text-[length:var(--text-mono)] leading-[1.65]",
-        "hairline-seal",
-        className,
-      )}
-      aria-label="Example chain-of-custody manifest excerpt"
-      role="img"
-    >
-      <div className="flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5">
-        <div className="flex items-center gap-2">
-          <span className="inline-block h-2 w-2 rounded-full bg-[var(--color-seal)]" aria-hidden="true" />
-          <span className="text-[0.75rem] tracking-[0.08em] uppercase text-[color:var(--color-ink-muted)]">
-            ChainOfCustody.txt
+    <div className={cn("relative", className)}>
+      {/* Top-right "Verified" stamp */}
+      <div
+        aria-hidden="true"
+        className="absolute -top-3 -right-3 z-10 select-none"
+      >
+        <span className="stamp text-[color:var(--color-seal-deep)] bg-[var(--color-seal-paper)]/85">
+          ✓ Sealed · 2026·V·09
+        </span>
+      </div>
+
+      <div
+        className={cn(
+          "relative overflow-hidden border border-[var(--color-rule)] bg-[var(--color-bg)] font-mono text-[length:var(--text-mono)] leading-[1.62] shadow-[0_18px_40px_-28px_rgba(20,23,28,0.25)] grain",
+        )}
+        aria-label="Example chain-of-custody manifest excerpt"
+        role="img"
+      >
+        {/* Title-bar with file name and seal dot */}
+        <div className="flex items-center justify-between border-b border-[var(--color-border-strong)] bg-[var(--color-bg-deep)] px-5 py-2.5">
+          <div className="flex items-center gap-2.5">
+            <span className="relative inline-flex h-2 w-2">
+              <span className="absolute inset-0 rounded-full bg-[var(--color-seal)]" />
+              <span className="absolute inset-[-2px] rounded-full border border-[var(--color-seal)] opacity-30" />
+            </span>
+            <span className="text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--color-ink)]">
+              ChainOfCustody.txt
+            </span>
+          </div>
+          <span className="text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+            Excerpt · folio 06 / 09
           </span>
         </div>
-        <span className="text-[0.75rem] text-[color:var(--color-ink-subtle)]">excerpt</span>
-      </div>
-      <pre className="overflow-x-auto px-5 py-5 text-[color:var(--color-ink)]">
-        <code>
+
+        {/* Sealed gold underline */}
+        <div className="hairline-seal" />
+
+        <pre className="overflow-x-auto px-6 py-6 text-[color:var(--color-ink)]">
+          <code>
 {`═══════════════════════════════════════════════════════════════════════
   KRELLIX MAIL — CHAIN-OF-CUSTODY MANIFEST
 ═══════════════════════════════════════════════════════════════════════
@@ -71,8 +84,19 @@ INTEGRITY
   This manifest will be SHA-256 hashed and submitted to a public
   RFC 3161 timestamp authority. The signed response is stored at
   ../07_TimestampMaterials/TimestampProof.tsr`}
-        </code>
-      </pre>
+          </code>
+        </pre>
+
+        {/* Bottom credit line */}
+        <div className="flex items-center justify-between border-t border-[var(--color-border-strong)] bg-[var(--color-bg-deep)] px-5 py-2.5">
+          <span className="text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+            DigiCert TSA · RFC 3161
+          </span>
+          <span className="text-[0.6875rem] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+            14:47:05Z
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

@@ -70,24 +70,32 @@ export default function ContactPage() {
 
             <div className="md:col-span-5">
               <Reveal delay={0.12}>
-                <div className="sticky top-28 space-y-5">
-                  <p className="eyebrow">What to expect</p>
-                  {expectations.map((item, i) => (
-                    <article
-                      key={item.title}
-                      className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-6"
-                    >
-                      <p className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
-                        {String(i + 1).padStart(2, "0")}
-                      </p>
-                      <h3 className="mt-2 font-display text-[1.125rem] leading-[1.25] tracking-[-0.005em] text-[color:var(--color-ink)]">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-[length:var(--text-body-sm)] leading-[1.55] text-[color:var(--color-ink-muted)]">
-                        {item.body}
-                      </p>
-                    </article>
-                  ))}
+                <div className="sticky top-28">
+                  <div className="border border-[var(--color-rule)] bg-[var(--color-bg)]">
+                    <div className="flex items-center justify-between border-b border-[var(--color-border-strong)] bg-[var(--color-bg-deep)] px-5 py-2.5">
+                      <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+                        Schedule of expectations
+                      </span>
+                      <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+                        I → III
+                      </span>
+                    </div>
+                    <ol className="divide-y divide-[var(--color-border)]">
+                      {expectations.map((item, i) => (
+                        <li key={item.title} className="px-5 py-5">
+                          <p className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                            §&nbsp;{String(i + 1).padStart(2, "0")}
+                          </p>
+                          <h3 className="mt-2 font-display text-[1.125rem] leading-[1.25] tracking-[-0.005em] text-[color:var(--color-ink)]">
+                            {item.title}
+                          </h3>
+                          <p className="mt-2 text-[length:var(--text-body-sm)] leading-[1.55] text-[color:var(--color-ink-muted)]">
+                            {item.body}
+                          </p>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
                 </div>
               </Reveal>
             </div>

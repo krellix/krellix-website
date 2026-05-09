@@ -6,19 +6,6 @@ type Node = {
   children?: Node[];
 };
 
-/**
- * The export structure every Krellix collection produces. Two files
- * sit at the export root (the master PDF and the verification
- * script); everything else is in numbered folders so file-system
- * sort order matches logical review order. 08_Documents/ is
- * Enterprise-only and only present if OneDrive/SharePoint collection
- * was enabled.
- *
- * These names and notes track EmailExporter.cs and ChainOfCustody.cs
- * in the app. If they drift, the export structure documented here
- * will be wrong, so treat this tree as documentation of the real
- * output, not as marketing copy.
- */
 const tree: Node[] = [
   {
     name: "Master_{case}_{date}.pdf",
@@ -92,11 +79,19 @@ export function OutputTree({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-5 md:p-7",
+        "border border-[var(--color-rule)] bg-[var(--color-bg)] grain",
         className,
       )}
     >
-      <ul className="space-y-4">
+      <div className="flex items-center justify-between border-b border-[var(--color-border-strong)] bg-[var(--color-bg-deep)] px-5 py-2.5">
+        <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+          /Export · Folio listing
+        </span>
+        <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+          {tree.length} entries
+        </span>
+      </div>
+      <ul className="space-y-4 px-5 py-6 md:px-7 md:py-7">
         {tree.map((node) => (
           <TreeRow key={node.name} node={node} depth={0} />
         ))}

@@ -8,6 +8,7 @@ import "./globals.css";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
+  style: ["normal", "italic"],
   variable: "--font-fraunces",
   display: "swap",
   axes: ["opsz", "SOFT"],
@@ -79,7 +80,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAFAF7",
+  themeColor: "#F7F3EA",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,

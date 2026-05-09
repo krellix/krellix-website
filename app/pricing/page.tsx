@@ -147,14 +147,20 @@ export default function PricingPage() {
               </Reveal>
             </div>
             <div className="md:col-span-8">
-              <dl className="divide-y divide-[var(--color-border)] border-t border-[var(--color-border-strong)] border-b">
+              <div className="rule-double" />
+              <dl className="divide-y divide-[var(--color-border)] border-b border-[var(--color-border-strong)]">
                 {faqs.map((item, i) => (
                   <Reveal key={item.q} delay={0.04 * i}>
-                    <div className="grid gap-3 py-7 md:grid-cols-12 md:gap-8">
-                      <dt className="font-display text-[1.25rem] leading-[1.3] tracking-[-0.008em] text-[color:var(--color-ink)] md:col-span-5">
+                    <div className="grid gap-3 py-8 md:grid-cols-12 md:gap-8">
+                      <div className="md:col-span-1">
+                        <span className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                          §&nbsp;{String(i + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <dt className="font-display text-[1.3125rem] leading-[1.25] tracking-[-0.008em] text-[color:var(--color-ink)] md:col-span-5">
                         {item.q}
                       </dt>
-                      <dd className="text-[length:var(--text-body)] leading-[1.65] text-[color:var(--color-ink-muted)] md:col-span-7">
+                      <dd className="text-[length:var(--text-body)] leading-[1.65] text-[color:var(--color-ink-muted)] md:col-span-6">
                         {item.a}
                       </dd>
                     </div>
@@ -170,14 +176,20 @@ export default function PricingPage() {
       <Section>
         <Container width="wide">
           <Reveal>
-            <div className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] p-8 md:p-12">
+            <div className="relative border border-[var(--color-rule)] bg-[var(--color-bg)] p-8 md:p-12 grain">
+              <span aria-hidden="true" className="stamp absolute -top-3 left-8 bg-[var(--color-bg)] text-[color:var(--color-seal-deep)]">
+                Pilot · open for inquiries
+              </span>
               <div className="grid gap-8 md:grid-cols-12 md:items-center">
                 <div className="md:col-span-8">
                   <p className="eyebrow">Pilot program</p>
-                  <h2 className="mt-3 font-display text-[clamp(1.75rem,3vw,2.25rem)] leading-[1.15] tracking-[-0.015em] text-balance">
-                    We&apos;re working closely with our first customers.
+                  <h2 className="mt-4 font-display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.1] tracking-[-0.015em] text-balance">
+                    We&apos;re working closely
+                    <span className="block italic text-[color:var(--color-ink-muted)]" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}>
+                      with our first customers.
+                    </span>
                   </h2>
-                  <p className="mt-4 max-w-[56ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                  <p className="mt-5 max-w-[56ch] text-[length:var(--text-body-lg)] leading-[1.62] text-[color:var(--color-ink-muted)]">
                     If you have a use case that fits, request a pilot — we&apos;ll set
                     you up directly.
                   </p>

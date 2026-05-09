@@ -6,22 +6,20 @@ type Variant = "primary" | "secondary" | "ghost" | "ink" | "seal";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 font-medium rounded-sm transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-accent)] disabled:pointer-events-none disabled:opacity-60";
+  "group relative inline-flex items-center justify-center gap-2 font-medium rounded-[2px] transition-[background-color,color,border-color,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] focus-visible:outline focus-visible:outline-[1.5px] focus-visible:outline-offset-3 focus-visible:outline-[var(--color-accent)] disabled:pointer-events-none disabled:opacity-60 active:translate-y-px";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-[var(--color-ink)] text-[color:var(--color-bg)] hover:bg-[#1d2229]",
+    "bg-[var(--color-ink)] text-[color:var(--color-bg)] hover:bg-[#1c2129] shadow-[0_1px_0_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.04)]",
   secondary:
-    "bg-transparent text-[color:var(--color-ink)] border border-[var(--color-border-strong)] hover:bg-[var(--color-surface)]",
+    "bg-transparent text-[color:var(--color-ink)] border border-[var(--color-border-strong)] hover:border-[var(--color-ink)] hover:bg-[var(--color-bg-deep)]",
   ghost:
-    "bg-transparent text-[color:var(--color-ink)] hover:bg-[var(--color-surface)]",
+    "bg-transparent text-[color:var(--color-ink)] hover:bg-[var(--color-bg-deep)]",
   ink:
     "bg-[var(--color-bg)] text-[color:var(--color-ink)] hover:bg-[var(--color-surface)]",
-  /* seal — for the rare CTA tied to a cryptographic artifact (sample
-     manifest, timestamped export). Reserved on purpose; the gold is
-     load-bearing visual signal, not decoration. */
+  /* seal — for the rare CTA tied to a cryptographic artifact. */
   seal:
-    "bg-[var(--color-seal)] text-[#FAFAF7] hover:bg-[#8F6724]",
+    "bg-[var(--color-seal)] text-[color:var(--color-bg)] hover:bg-[var(--color-seal-deep)] shadow-[0_1px_0_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.12)]",
 };
 
 const sizes: Record<Size, string> = {
@@ -61,7 +59,7 @@ export function Button(props: ButtonAsButton | ButtonAsLink) {
 
   const inner = (
     <>
-      <span>{children}</span>
+      <span className="relative">{children}</span>
       {arrow ? <ArrowRight /> : null}
     </>
   );
@@ -100,7 +98,7 @@ function ArrowRight() {
       viewBox="0 0 14 14"
       fill="none"
       aria-hidden="true"
-      className="transition-transform duration-200 group-hover:translate-x-0.5"
+      className="transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
     >
       <path
         d="M2 7h10m0 0L8 3m4 4-4 4"

@@ -13,24 +13,47 @@ import { audiences, siteConfig } from "@/lib/site-config";
 export default function HomePage() {
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
+      {/* ── Hero — title page of the folio ─────────────────────── */}
+      <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-28">
+        {/* Right-edge faint margin rule, like a printed page */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-[6vw] hidden w-px bg-[color:color-mix(in_srgb,var(--color-rule)_50%,transparent)] md:block"
+        />
+
         <Container width="wide">
-          <div className="grid items-center gap-12 md:grid-cols-12">
+          {/* Folio header bar — running head above the title */}
+          <Reveal>
+            <div className="mb-12 flex items-baseline justify-between border-b border-[var(--color-border-strong)] pb-3">
+              <p className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.2em] text-[color:var(--color-ink-subtle)]">
+                Krellix Mail · Edition v{siteConfig.appVersion}
+              </p>
+              <p className="hidden font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.2em] text-[color:var(--color-ink-subtle)] md:block">
+                MMXXVI · {siteConfig.location.city}, {siteConfig.location.region}
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid items-start gap-x-12 gap-y-16 md:grid-cols-12">
             <div className="md:col-span-7">
-              <Reveal>
-                <Eyebrow number="01">{siteConfig.productName} · v{siteConfig.appVersion}</Eyebrow>
+              <Reveal delay={0.04}>
+                <Eyebrow number="01">Defensible collection, ready to file</Eyebrow>
               </Reveal>
-              <Reveal delay={0.05}>
-                <h1 className="mt-6 font-display text-[clamp(2.75rem,6.75vw,5.25rem)] leading-[1.02] tracking-[-0.022em] text-balance text-[color:var(--color-ink)]">
+
+              <Reveal delay={0.1}>
+                <h1 className="mt-7 font-display text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.98] tracking-[-0.024em] text-balance text-[color:var(--color-ink)]">
                   Preserve email and documents
-                  <span className="block text-[color:var(--color-ink-muted)]">
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
                     in a way a court will accept.
                   </span>
                 </h1>
               </Reveal>
-              <Reveal delay={0.12}>
-                <p className="mt-7 max-w-[54ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+
+              <Reveal delay={0.16}>
+                <p className="mt-9 max-w-[56ch] text-[length:var(--text-body-lg)] leading-[1.62] text-[color:var(--color-ink-soft)]">
                   Krellix collects email from Microsoft 365 with full chain of custody —
                   SHA-256 hashes, RFC 3161 timestamps from DigiCert, and a self-verifying
                   manifest. Built for solo attorneys, in-house counsel, and HR
@@ -38,7 +61,8 @@ export default function HomePage() {
                   vendor invoice.
                 </p>
               </Reveal>
-              <Reveal delay={0.18}>
+
+              <Reveal delay={0.22}>
                 <div className="mt-10 flex flex-wrap items-center gap-4">
                   <Button href="/contact" variant="primary" size="lg" arrow>
                     Request a pilot
@@ -48,8 +72,9 @@ export default function HomePage() {
                   </Button>
                 </div>
               </Reveal>
-              <Reveal delay={0.24}>
-                <div className="mt-10 flex flex-wrap items-center gap-3">
+
+              <Reveal delay={0.28}>
+                <div className="mt-12 flex flex-wrap items-center gap-2.5">
                   <SealBadge>SHA-256 + MD5</SealBadge>
                   <SealBadge>RFC 3161 timestamped</SealBadge>
                   <SealBadge>Verifiable on any machine</SealBadge>
@@ -57,39 +82,35 @@ export default function HomePage() {
               </Reveal>
             </div>
 
-            <div className="hidden md:col-span-5 md:block">
-              <Reveal delay={0.25}>
-                <HeroOrnament className="aspect-square w-full" />
+            <div className="md:col-span-5">
+              <Reveal delay={0.18}>
+                <HeroOrnament />
               </Reveal>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Positioning strip */}
-      <section className="border-y border-[var(--color-border)] bg-[var(--color-surface)]">
-        <Container width="wide" className="py-10">
+      {/* ── Positioning strip — three terse mono assertions ─────── */}
+      <section className="border-y border-[var(--color-border-strong)] bg-[var(--color-bg-deep)]">
+        <Container width="wide" className="py-9">
           <div className="grid items-center gap-6 md:grid-cols-3">
-            <Reveal>
-              <p className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
-                <span className="text-[color:var(--color-accent)]">→</span> Runs on the operator&apos;s Windows machine
-              </p>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
-                <span className="text-[color:var(--color-accent)]">→</span> No data leaves your control
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
-                <span className="text-[color:var(--color-accent)]">→</span> Delivered in plain, open formats
-              </p>
-            </Reveal>
+            {positions.map((p, i) => (
+              <Reveal key={p} delay={0.05 * i}>
+                <p className="flex items-baseline gap-3 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-soft)]">
+                  <span className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span aria-hidden="true" className="block h-2.5 w-px bg-[var(--color-border-strong)]" />
+                  <span>{p}</span>
+                </p>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>
 
-      {/* Where Krellix is today */}
+      {/* ── Where Krellix is today ──────────────────────────────── */}
       <Section>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
@@ -98,23 +119,35 @@ export default function HomePage() {
                 <Eyebrow number="02">Where Krellix is today</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
-                  Honest about the stage we&apos;re at.
+                <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
+                  Honest about the
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
+                    stage we&apos;re at.
+                  </span>
                 </h2>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <p className="mt-7 max-w-[36ch] text-[length:var(--text-body)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                  We&apos;re building this with our pilot customers, deliberately, and we&apos;ll tell you exactly what&apos;s shipping and what isn&apos;t.
+                </p>
               </Reveal>
             </div>
             <div className="md:col-span-8">
               <RevealStagger>
+                <div className="rule-double" />
                 {stage.map((item, i) => (
                   <RevealItem key={item.title}>
-                    <div className="grid gap-4 border-t border-[var(--color-border)] py-8 md:grid-cols-12 md:gap-10">
+                    <div className="grid gap-4 border-b border-[var(--color-border)] py-9 md:grid-cols-12 md:gap-10">
                       <div className="md:col-span-1">
-                        <span className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
-                          {String(i + 1).padStart(2, "0")}
+                        <span className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                          §&nbsp;{String(i + 1).padStart(2, "0")}
                         </span>
                       </div>
                       <div className="md:col-span-4">
-                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.2] tracking-[-0.008em]">
+                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.18] tracking-[-0.008em]">
                           {item.title}
                         </h3>
                       </div>
@@ -126,15 +159,14 @@ export default function HomePage() {
                     </div>
                   </RevealItem>
                 ))}
-                <div className="border-t border-[var(--color-border)]" />
               </RevealStagger>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* The problem */}
-      <Section tone="surface" divider>
+      {/* ── The problem ─────────────────────────────────────────── */}
+      <Section tone="surface" divider doubleRule>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
@@ -142,15 +174,21 @@ export default function HomePage() {
                 <Eyebrow number="03">The gap Krellix fills</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
-                  Defensible collection shouldn&apos;t require an E5 license.
+                <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
+                  Defensible collection
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
+                    shouldn&apos;t require an E5 license.
+                  </span>
                 </h2>
               </Reveal>
             </div>
             <div className="md:col-span-7">
               <Reveal delay={0.12}>
-                <div className="space-y-5 text-[length:var(--text-body-lg)] leading-[1.65] text-[color:var(--color-ink-muted)]">
-                  <p>
+                <div className="space-y-6 text-[length:var(--text-body-lg)] leading-[1.65] text-[color:var(--color-ink-soft)]">
+                  <p className="dropcap">
                     Most small firms and mid-market companies don&apos;t have Microsoft Purview.
                     The moment a matter requires preserved email, the options narrow to
                     three: forward messages to yourself (inadmissible), ask IT to PST-export
@@ -174,7 +212,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* How it works */}
+      {/* ── How it works ────────────────────────────────────────── */}
       <Section divider>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
@@ -183,12 +221,18 @@ export default function HomePage() {
                 <Eyebrow number="04">How it works</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
-                  Four steps. Same output every time.
+                <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
+                  Four steps.
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
+                    Same output every time.
+                  </span>
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
-                <p className="mt-6 text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                <p className="mt-7 text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
                   From sign-in to sealed export, a typical collection takes under thirty
                   minutes of operator time.
                 </p>
@@ -200,23 +244,24 @@ export default function HomePage() {
                     className="group inline-flex items-center gap-2 text-[color:var(--color-ink)] underline decoration-1 underline-offset-4 hover:text-[color:var(--color-accent)]"
                   >
                     Full walkthrough, with screenshots
-                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">→</span>
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
                   </Link>
                 </div>
               </Reveal>
             </div>
             <div className="md:col-span-8">
               <RevealStagger>
+                <div className="rule-double" />
                 {steps.map((step, i) => (
                   <RevealItem key={step.title}>
-                    <div className="grid gap-4 border-t border-[var(--color-border)] py-8 md:grid-cols-12 md:gap-10">
+                    <div className="grid gap-4 border-b border-[var(--color-border)] py-9 md:grid-cols-12 md:gap-10">
                       <div className="md:col-span-1">
-                        <span className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-subtle)]">
-                          {String(i + 1).padStart(2, "0")}
+                        <span className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                          §&nbsp;{String(i + 1).padStart(2, "0")}
                         </span>
                       </div>
                       <div className="md:col-span-4">
-                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.2] tracking-[-0.008em]">
+                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.18] tracking-[-0.008em]">
                           {step.title}
                         </h3>
                       </div>
@@ -228,28 +273,33 @@ export default function HomePage() {
                     </div>
                   </RevealItem>
                 ))}
-                <div className="border-t border-[var(--color-border)]" />
               </RevealStagger>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Sample output */}
-      <Section tone="surface" divider>
+      {/* ── Sample output ───────────────────────────────────────── */}
+      <Section tone="surface" divider doubleRule>
         <Container width="wide">
-          <div className="grid gap-12 md:grid-cols-12 md:items-start">
+          <div className="grid gap-14 md:grid-cols-12 md:items-start">
             <div className="md:col-span-5">
               <Reveal>
                 <Eyebrow number="05">What you ship</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
-                  The manifest is the artifact that wins the argument.
+                <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
+                  The manifest is the
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
+                    artifact that wins the argument.
+                  </span>
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 max-w-[50ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                <p className="mt-7 max-w-[50ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-soft)]">
                   Every export includes a signed plain-text manifest of exactly who collected
                   what, from whom, when, and how. Hash the manifest, send the hash to a public
                   Time Stamp Authority, archive the signed response. The verification process
@@ -257,7 +307,7 @@ export default function HomePage() {
                 </p>
               </Reveal>
               <Reveal delay={0.16}>
-                <div className="mt-8 flex flex-wrap gap-4">
+                <div className="mt-10 flex flex-wrap gap-4">
                   <Button href="/how-it-works" variant="primary" arrow>
                     See how it works
                   </Button>
@@ -276,7 +326,7 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      {/* Audiences */}
+      {/* ── Audiences ───────────────────────────────────────────── */}
       <Section>
         <Container width="wide">
           <div className="grid gap-12 md:grid-cols-12">
@@ -285,18 +335,30 @@ export default function HomePage() {
                 <Eyebrow number="06">Who Krellix is for</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
-                  Built for the person who needs the evidence, not the person who manages the tenant.
+                <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
+                  Built for the person who needs the evidence,
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
+                    not the person who manages the tenant.
+                  </span>
                 </h2>
               </Reveal>
             </div>
             <div className="md:col-span-8">
               <RevealStagger>
-                {audiences.map((audience) => (
+                <div className="rule-double" />
+                {audiences.map((audience, i) => (
                   <RevealItem key={audience.title}>
-                    <div className="grid gap-4 border-t border-[var(--color-border)] py-8 md:grid-cols-12 md:gap-10">
-                      <div className="md:col-span-5">
-                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.2] tracking-[-0.008em]">
+                    <div className="grid gap-4 border-b border-[var(--color-border)] py-9 md:grid-cols-12 md:gap-10">
+                      <div className="md:col-span-1">
+                        <span className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                      <div className="md:col-span-4">
+                        <h3 className="font-display text-[length:var(--text-h3)] leading-[1.18] tracking-[-0.008em]">
                           {audience.title}
                         </h3>
                       </div>
@@ -308,28 +370,33 @@ export default function HomePage() {
                     </div>
                   </RevealItem>
                 ))}
-                <div className="border-t border-[var(--color-border)]" />
               </RevealStagger>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* Pricing preview */}
-      <Section tone="surface" divider>
+      {/* ── Pricing preview ─────────────────────────────────────── */}
+      <Section tone="surface" divider doubleRule>
         <Container width="wide">
-          <div className="grid gap-10 md:grid-cols-12 md:items-end">
+          <div className="grid gap-12 md:grid-cols-12 md:items-end">
             <div className="md:col-span-7">
               <Reveal>
                 <Eyebrow number="07">Pricing</Eyebrow>
               </Reveal>
               <Reveal delay={0.05}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.08] tracking-[-0.018em] text-balance">
-                  Three tiers. Published on the pricing page.
+                <h2 className="mt-6 font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.018em] text-balance">
+                  Three tiers.
+                  <span
+                    className="block italic text-[color:var(--color-ink-muted)]"
+                    style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                  >
+                    Published on the pricing page.
+                  </span>
                 </h2>
               </Reveal>
               <Reveal delay={0.1}>
-                <p className="mt-6 max-w-[56ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                <p className="mt-7 max-w-[58ch] text-[length:var(--text-body-lg)] leading-[1.6] text-[color:var(--color-ink-soft)]">
                   No per-seat pricing, no per-custodian pricing, no per-gigabyte
                   pricing. One annual license, unlimited collections. Solo for the
                   individual practitioner; Firm for 2&ndash;5 attorneys; Enterprise
@@ -337,7 +404,7 @@ export default function HomePage() {
                 </p>
               </Reveal>
               <Reveal delay={0.16}>
-                <div className="mt-8 flex flex-wrap gap-4">
+                <div className="mt-10 flex flex-wrap gap-4">
                   <Button href="/pricing" variant="primary" arrow>
                     See what&apos;s included
                   </Button>
@@ -349,46 +416,51 @@ export default function HomePage() {
             </div>
             <div className="md:col-span-5">
               <Reveal delay={0.18}>
-                <dl className="grid grid-cols-3 gap-4 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-6 md:p-7">
-                  <div>
-                    <dt className="eyebrow">Solo</dt>
-                    <dd className="mt-2 font-display text-[1.625rem] leading-none tracking-[-0.015em]">
-                      ${siteConfig.pricing.soloAnnual}
-                    </dd>
-                    <dd className="mt-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
-                      / year
-                    </dd>
+                <div className="border border-[var(--color-rule)] bg-[var(--color-bg)]">
+                  <div className="flex items-center justify-between border-b border-[var(--color-border-strong)] px-5 py-2.5">
+                    <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+                      Annual license
+                    </span>
+                    <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+                      USD
+                    </span>
                   </div>
-                  <div>
-                    <dt className="eyebrow">Firm</dt>
-                    <dd className="mt-2 font-display text-[1.625rem] leading-none tracking-[-0.015em]">
-                      ${siteConfig.pricing.firmAnnual}
-                    </dd>
-                    <dd className="mt-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
-                      / year
-                    </dd>
-                  </div>
-                  <div>
-                    <dt className="eyebrow">Enterprise</dt>
-                    <dd className="mt-2 font-display text-[1.625rem] leading-none tracking-[-0.015em]">
-                      from ${siteConfig.pricing.enterpriseAnnual.toLocaleString()}
-                    </dd>
-                    <dd className="mt-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
-                      / year
-                    </dd>
-                  </div>
-                </dl>
+                  <dl className="grid grid-cols-3 divide-x divide-[var(--color-border)]">
+                    {[
+                      { name: "Solo", value: `$${siteConfig.pricing.soloAnnual}` },
+                      { name: "Firm", value: `$${siteConfig.pricing.firmAnnual}` },
+                      { name: "Enterprise", value: `from $${siteConfig.pricing.enterpriseAnnual.toLocaleString()}` },
+                    ].map((tier) => (
+                      <div key={tier.name} className="px-5 py-6">
+                        <dt className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)]">
+                          {tier.name}
+                        </dt>
+                        <dd className="mt-3 font-display text-[1.625rem] leading-none tracking-[-0.018em] text-[color:var(--color-ink)]">
+                          {tier.value}
+                        </dd>
+                        <dd className="mt-1.5 font-mono text-[length:var(--text-mono-sm)] text-[color:var(--color-ink-muted)]">
+                          / year
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
               </Reveal>
             </div>
           </div>
         </Container>
       </Section>
 
-      {/* CTA */}
       <CtaBanner />
     </>
   );
 }
+
+const positions = [
+  "Runs on the operator's Windows machine",
+  "No data leaves your control",
+  "Delivered in plain, open formats",
+] as const;
 
 const stage = [
   {

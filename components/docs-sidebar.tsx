@@ -44,11 +44,15 @@ export function DocsSidebar({ className }: { className?: string }) {
       aria-label="Documentation"
       className={cn("text-[length:var(--text-body-sm)]", className)}
     >
-      <div className="space-y-7">
+      <p className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+        Folio · Documentation
+      </p>
+      <div className="mt-2 rule-double" />
+      <div className="mt-7 space-y-8">
         {docsNav.map((group) => (
           <div key={group.heading}>
             <p className="eyebrow">{group.heading}</p>
-            <ul className="mt-3 space-y-1.5">
+            <ul className="mt-3 space-y-0.5">
               {group.links.map((link) => {
                 const active = pathname === link.href;
                 return (
@@ -56,10 +60,10 @@ export function DocsSidebar({ className }: { className?: string }) {
                     <Link
                       href={link.href}
                       className={cn(
-                        "block border-l-2 pl-3 py-1 transition-colors",
+                        "block border-l pl-3.5 py-1.5 transition-colors",
                         active
                           ? "border-[var(--color-accent)] text-[color:var(--color-ink)] font-medium"
-                          : "border-transparent text-[color:var(--color-ink-muted)] hover:border-[var(--color-border-strong)] hover:text-[color:var(--color-ink)]",
+                          : "border-[var(--color-border)] text-[color:var(--color-ink-muted)] hover:border-[var(--color-ink)] hover:text-[color:var(--color-ink)]",
                       )}
                     >
                       {link.label}

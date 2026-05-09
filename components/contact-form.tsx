@@ -42,15 +42,21 @@ export function ContactForm({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          "rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] p-6 md:p-8",
+          "relative border border-[var(--color-rule)] bg-[var(--color-bg)] p-7 md:p-9",
           className,
         )}
       >
+        <span aria-hidden="true" className="stamp absolute -top-3 right-5 bg-[var(--color-bg)] text-[color:var(--color-seal-deep)]">
+          Composed
+        </span>
         <p className="eyebrow">Email opened</p>
-        <h3 className="mt-3 font-display text-[clamp(1.5rem,2.5vw,1.875rem)] leading-[1.15] tracking-[-0.015em] text-[color:var(--color-ink)]">
-          Send the message and I&apos;ll reply within one business day.
+        <h3 className="mt-4 font-display text-[clamp(1.625rem,2.5vw,2rem)] leading-[1.12] tracking-[-0.015em] text-[color:var(--color-ink)]">
+          Send the message and I&apos;ll reply
+          <span className="block italic text-[color:var(--color-ink-muted)]" style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}>
+            within one business day.
+          </span>
         </h3>
-        <p className="mt-3 text-[length:var(--text-body)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+        <p className="mt-4 text-[length:var(--text-body)] leading-[1.6] text-[color:var(--color-ink-muted)]">
           If your email client didn&apos;t open, write to{" "}
           <a
             href={`mailto:${siteConfig.contact.email}`}
@@ -115,7 +121,7 @@ function Field({
 }) {
   const id = `contact-${name}`;
   const common = cn(
-    "block w-full rounded-sm border border-[var(--color-border-strong)] bg-[var(--color-bg)] px-3.5 py-2.5 text-[length:var(--text-body)] text-[color:var(--color-ink)] transition-colors",
+    "block w-full rounded-[2px] border border-[var(--color-border-strong)] bg-[var(--color-bg)] px-3.5 py-2.5 text-[length:var(--text-body)] text-[color:var(--color-ink)] transition-colors",
     "placeholder:text-[color:var(--color-ink-subtle)]",
     "focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]",
   );

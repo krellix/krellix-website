@@ -244,21 +244,31 @@ function ModeCard({
   return (
     <div
       className={
-        "flex h-full flex-col rounded-md border p-7 md:p-8 " +
+        "relative flex h-full flex-col border p-7 md:p-9 " +
         (highlighted
-          ? "border-[var(--color-seal-soft)] bg-[var(--color-seal-tint)]"
-          : "border-[var(--color-border-strong)] bg-[var(--color-bg)]")
+          ? "border-[var(--color-seal-soft)] bg-[var(--color-seal-paper)] shadow-[0_18px_40px_-32px_rgba(155,111,34,0.45)]"
+          : "border-[var(--color-rule)] bg-[var(--color-bg)]")
       }
     >
-      <p className="eyebrow">Mode</p>
-      <h3 className="mt-2 font-display text-[2.25rem] leading-[1.05] tracking-[-0.018em] text-[color:var(--color-ink)]">
+      <span
+        aria-hidden="true"
+        className="absolute right-5 top-4 font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)]"
+      >
+        Mode {name === "Personal" ? "I" : "II"}
+      </span>
+      <p className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+        Operating mode
+      </p>
+      <h3 className="mt-3 font-display text-[2.5rem] leading-[1.04] tracking-[-0.02em] text-[color:var(--color-ink)]">
         {name}
       </h3>
-      <p className="mt-3 text-[length:var(--text-body-lg)] leading-[1.55] text-[color:var(--color-ink-muted)]">
+      <p className="mt-4 max-w-[40ch] text-[length:var(--text-body-lg)] leading-[1.55] text-[color:var(--color-ink-muted)]">
         {lede}
       </p>
 
-      <dl className="mt-8 space-y-5">
+      <div className="mt-7 hairline" />
+
+      <dl className="mt-7 space-y-5">
         <Row term="Built for" value={audience} />
         <Row term="Mailbox access" value={mailbox} />
         <Row term="Filtering" value={filter} />
@@ -272,7 +282,7 @@ function ModeCard({
           {scopes.map((scope) => (
             <code
               key={scope}
-              className="rounded-sm border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-1 font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink)]"
+              className="rounded-[2px] border border-[var(--color-border-strong)] bg-[var(--color-bg)] px-2.5 py-1 font-mono text-[length:var(--text-mono-sm)] text-[color:var(--color-ink)]"
             >
               {scope}
             </code>

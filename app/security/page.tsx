@@ -53,13 +53,16 @@ export default function SecurityPage() {
             </div>
             <div className="md:col-span-7">
               <Reveal delay={0.1}>
-                <ul className="space-y-3.5">
-                  {currentPosture.map((item) => (
+                <ul className="border-y-2 border-double border-[var(--color-border-strong)] divide-y divide-[var(--color-border)]">
+                  {currentPosture.map((item, i) => (
                     <li
                       key={item}
-                      className="flex items-start gap-3 rounded-sm border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-[length:var(--text-body)] leading-[1.55] text-[color:var(--color-ink)]"
+                      className="grid grid-cols-[auto_auto_1fr] items-baseline gap-4 py-3.5 text-[length:var(--text-body)] leading-[1.55] text-[color:var(--color-ink)]"
                     >
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="mt-[0.3rem] flex-shrink-0">
+                      <span className="font-mono text-[length:var(--text-mono-sm)] tabular text-[color:var(--color-ink-subtle)]">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="mt-[0.3rem] flex-shrink-0">
                         <path
                           d="M3 8.5l3.5 3.5L13 4.5"
                           stroke="var(--color-accent)"
@@ -113,17 +116,17 @@ export default function SecurityPage() {
             </div>
             <div className="md:col-span-7">
               <Reveal delay={0.1}>
-                <ul className="space-y-4">
+                <ul className="border-y-2 border-double border-[var(--color-border-strong)] divide-y divide-[var(--color-border)]">
                   {comingSoon.map((item) => (
                     <li
                       key={item.title}
-                      className="rounded-sm border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
+                      className="py-5"
                     >
                       <div className="flex items-baseline justify-between gap-4">
-                        <p className="font-display text-[1.0625rem] leading-[1.25] tracking-[-0.005em] text-[color:var(--color-ink)]">
+                        <p className="font-display text-[1.125rem] leading-[1.25] tracking-[-0.005em] text-[color:var(--color-ink)]">
                           {item.title}
                         </p>
-                        <span className="font-mono text-[length:var(--text-mono)] uppercase tracking-[0.08em] text-[color:var(--color-ink-muted)]">
+                        <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-muted)]">
                           {item.status}
                         </span>
                       </div>
@@ -161,14 +164,22 @@ export default function SecurityPage() {
             </div>
             <div className="md:col-span-7">
               <Reveal delay={0.1}>
-                <div className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-bg)] overflow-hidden">
+                <div className="border border-[var(--color-rule)] bg-[var(--color-bg)]">
+                  <div className="flex items-center justify-between border-b border-[var(--color-border-strong)] bg-[var(--color-bg-deep)] px-5 py-2.5">
+                    <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+                      Data flow ledger
+                    </span>
+                    <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.18em] text-[color:var(--color-ink-subtle)]">
+                      {String(dataFlow.length).padStart(2, "0")} entries
+                    </span>
+                  </div>
                   <table className="w-full text-left">
                     <thead>
-                      <tr className="bg-[var(--color-surface)]">
-                        <th className="px-5 py-3 text-[length:var(--text-body-sm)] font-medium text-[color:var(--color-ink)] border-b border-[var(--color-border)]">
+                      <tr>
+                        <th className="px-5 py-3 text-left font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)] border-b border-[var(--color-border)]">
                           Data type
                         </th>
-                        <th className="px-5 py-3 text-[length:var(--text-body-sm)] font-medium text-[color:var(--color-ink)] border-b border-[var(--color-border)]">
+                        <th className="px-5 py-3 text-left font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)] border-b border-[var(--color-border)]">
                           Where it lives
                         </th>
                       </tr>
@@ -176,10 +187,10 @@ export default function SecurityPage() {
                     <tbody>
                       {dataFlow.map((row) => (
                         <tr key={row.type}>
-                          <td className="px-5 py-4 text-[length:var(--text-body)] text-[color:var(--color-ink)] border-b border-[var(--color-border)] last:border-b-0">
+                          <td className="px-5 py-4 text-[length:var(--text-body)] text-[color:var(--color-ink)] border-b border-[var(--color-border)] last:border-b-0 align-top">
                             {row.type}
                           </td>
-                          <td className="px-5 py-4 text-[length:var(--text-body)] text-[color:var(--color-ink-muted)] border-b border-[var(--color-border)] last:border-b-0">
+                          <td className="px-5 py-4 text-[length:var(--text-body)] text-[color:var(--color-ink-muted)] border-b border-[var(--color-border)] last:border-b-0 align-top">
                             {row.location}
                           </td>
                         </tr>
@@ -208,12 +219,16 @@ export default function SecurityPage() {
           <div className="mt-14 grid gap-8 md:grid-cols-2">
             {controls.map((c, i) => (
               <Reveal key={c.title} delay={0.03 * i}>
-                <article className="flex h-full flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-7">
+                <article className="relative flex h-full flex-col border border-[var(--color-rule)] bg-[var(--color-bg)] p-7">
+                  <span aria-hidden="true" className="absolute right-5 top-4 font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.16em] text-[color:var(--color-ink-subtle)]">
+                    {String(i + 1).padStart(2, "0")} / {String(controls.length).padStart(2, "0")}
+                  </span>
                   <p className="eyebrow">{c.label}</p>
-                  <h3 className="mt-3 font-display text-[1.375rem] leading-[1.2] tracking-[-0.01em] text-[color:var(--color-ink)]">
+                  <h3 className="mt-3 font-display text-[1.5rem] leading-[1.18] tracking-[-0.01em] text-[color:var(--color-ink)]">
                     {c.title}
                   </h3>
-                  <p className="mt-3 text-[length:var(--text-body)] leading-[1.6] text-[color:var(--color-ink-muted)]">
+                  <div className="mt-4 hairline" />
+                  <p className="mt-4 text-[length:var(--text-body)] leading-[1.6] text-[color:var(--color-ink-muted)]">
                     {c.body}
                   </p>
                 </article>
@@ -246,26 +261,26 @@ export default function SecurityPage() {
             </div>
             <div className="md:col-span-7">
               <Reveal delay={0.1}>
-                <div className="space-y-5">
+                <ul className="border-y-2 border-double border-[var(--color-border-strong)] divide-y divide-[var(--color-border)]">
                   {scopes.map((s) => (
-                    <div
+                    <li
                       key={s.name}
-                      className="rounded-sm border border-[var(--color-border)] bg-[var(--color-bg)] p-5"
+                      className="py-5"
                     >
                       <div className="flex items-baseline justify-between gap-4">
                         <code className="font-mono text-[length:var(--text-body)] text-[color:var(--color-ink)]">
                           {s.name}
                         </code>
-                        <span className="font-mono text-[length:var(--text-mono)] text-[color:var(--color-ink-muted)]">
+                        <span className="font-mono text-[length:var(--text-mono-sm)] uppercase tracking-[0.14em] text-[color:var(--color-ink-subtle)]">
                           {s.mode}
                         </span>
                       </div>
                       <p className="mt-2 text-[length:var(--text-body-sm)] leading-[1.55] text-[color:var(--color-ink-muted)]">
                         {s.why}
                       </p>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </Reveal>
             </div>
           </div>
